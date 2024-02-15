@@ -25,10 +25,18 @@ public class CustomExceptionHandler {
         return new ErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage());
     }
 
+    @ExceptionHandler(RoleException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorResponse handlerRoleException(RoleException ex) {
+        return new ErrorResponse(HttpStatus.FORBIDDEN, ex.getMessage());
+    }
+
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handlerBadRequestException(BadRequestException ex) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
+
+
 
 }
