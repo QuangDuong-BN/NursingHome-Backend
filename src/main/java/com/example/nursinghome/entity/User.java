@@ -1,7 +1,6 @@
 package com.example.nursinghome.entity;
 
-import com.example.nursinghome.enumCustom.RoleUser;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.example.nursinghome.enum_Custom.RoleUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
