@@ -1,6 +1,6 @@
 package com.example.nursinghome.entity;
 
-import com.example.nursinghome.enum_Custom.RoleUser;
+import com.example.nursinghome.enumcustom.RoleUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
 package com.example.nursinghome.entity;
 
-import com.example.nursinghome.enum_Custom.TypeService;
+import com.example.nursinghome.enumcustom.TypeService;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

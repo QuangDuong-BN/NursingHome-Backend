@@ -1,6 +1,6 @@
-package com.example.nursinghome.dto;
+package com.example.nursinghome.entitydto;
 
-import com.example.nursinghome.enum_Custom.TypeService;
+import com.example.nursinghome.enumcustom.TypeService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

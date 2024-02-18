@@ -1,4 +1,4 @@
-package com.example.nursinghome.enum_Custom;
+package com.example.nursinghome.enumcustom;
 
 public enum RoleUser {
     ADMIN,

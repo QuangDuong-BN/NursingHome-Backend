@@ -1,8 +1,8 @@
-package com.example.nursinghome.my_application_runner;
+package com.example.nursinghome.myapplicationrunner;
 
 import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.entity.User;
-import com.example.nursinghome.enum_Custom.RoleUser;
+import com.example.nursinghome.enumcustom.RoleUser;
 import com.example.nursinghome.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
