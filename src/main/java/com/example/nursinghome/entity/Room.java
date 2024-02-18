@@ -16,7 +16,7 @@ public class Room {
     private Long id;
 
     @Column(name = "name", nullable = false)
-    private Long name;
+    private String name;
 
     @Column(name = "type", nullable = false)
     private String type;

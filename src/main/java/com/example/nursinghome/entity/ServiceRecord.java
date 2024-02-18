@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "service")
-public class Service {
+@Table(name = "service_record")
+public class ServiceRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,10 @@ public class Service {
     @ManyToOne
     @JoinColumn(name = "user_id_fk", nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "service_info_id_fk", nullable = false)
+    private ServiceInfo serviceInfo;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -36,7 +40,7 @@ public class Service {
     @Column(name = "status", nullable = false)
     private String status;
 
-    @Column(name = "describe_service", nullable = false, columnDefinition = "LONGTEXT")
+    @Column(name = "describe_service", nullable = true, columnDefinition = "LONGTEXT")
     private String description;
 
     // Getters and setters
