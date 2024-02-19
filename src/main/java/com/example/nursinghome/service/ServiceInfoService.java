@@ -2,7 +2,8 @@ package com.example.nursinghome.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.example.nursinghome.entitydto.ServiceInfoDTO;
+import com.example.nursinghome.entitydto.ServiceInfoRequest;
+import com.example.nursinghome.entitydto.ServiceInfoResponse;
 import com.example.nursinghome.entity.ServiceInfo;
 import com.example.nursinghome.exception.RoleException;
 import com.example.nursinghome.repository.ServiceInfoRepository;
@@ -32,17 +33,24 @@ public class ServiceInfoService {
     @Value("${cloudinary.api-secret}")
     private String apiSecret;
 
-    public void AddServiceInfo(HttpServletRequest request, String name, String descriptionService , MultipartFile file) {
+    public void AddServiceInfo(HttpServletRequest request, ServiceInfoRequest serviceInfoRequest) {
         try {
+            // Tạo đối tượng Cloudinary
             Cloudinary cloudinary = new Cloudinary("cloudinary://" + apiKey + ":" + apiSecret + "@" + cloudName);
-            Map<?, ?> result = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+            Map<?, ?> result = cloudinary.uploader().upload(serviceInfoRequest.getMultipartFile().getBytes(), ObjectUtils.emptyMap());
             // Lấy URL của ảnh tải lên từ kết quả
             String imageUrl = (String) result.get("url");
             var serviceInfo = ServiceInfo.builder()
-                    .name(name)
-                    .descriptionService(descriptionService)
-                    .imageUrl(imageUrl)
-                    .build();
+                            .name(serviceInfoRequest.getName())
+                            .type(serviceInfoRequest.getType())
+                            .priceDay(serviceInfoRequest.getPriceDay())
+                            .priceWeek(serviceInfoRequest.getPriceWeek())
+                            .priceMonth(serviceInfoRequest.getPriceMonth())
+                            .priceYear(serviceInfoRequest.getPriceYear())
+                            .ticketPrices(serviceInfoRequest.getTicketPrices())
+                            .descriptionService(serviceInfoRequest.getDescriptionService())
+                            .imageUrl(imageUrl)
+                            .build();
 
             serviceInfoRepository.save(serviceInfo);
         } catch (IOException e) {
@@ -51,15 +59,15 @@ public class ServiceInfoService {
         }
     }
 
-    public List<ServiceInfoDTO> getAllServiceInfo() {
+    public List<ServiceInfoResponse> getAllServiceInfo() {
         List<ServiceInfo> serviceInfos = serviceInfoRepository.findAll();
         return serviceInfos.stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
     }
 
-    private ServiceInfoDTO mapToDTO(ServiceInfo serviceInfo) {
-        ServiceInfoDTO dto = new ServiceInfoDTO();
+    private ServiceInfoResponse mapToDTO(ServiceInfo serviceInfo) {
+        ServiceInfoResponse dto = new ServiceInfoResponse();
         dto.setName(serviceInfo.getName());
         dto.setType(serviceInfo.getType());
         dto.setPriceDay(serviceInfo.getPriceDay());

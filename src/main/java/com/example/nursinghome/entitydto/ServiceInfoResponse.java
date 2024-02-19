@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class ServiceInfoDTO {
+public class ServiceInfoResponse {
     private String name;
     private TypeService type;
     private Double priceDay;
