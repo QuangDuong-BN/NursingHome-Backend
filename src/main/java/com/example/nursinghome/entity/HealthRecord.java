@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "health_record")
 public class HealthRecord {
 
@@ -21,28 +23,28 @@ public class HealthRecord {
     @ManyToOne
     @JoinColumn(name = "user_id_fk", nullable = false)
     private User user;
-
-    @Column(name = "weigh", nullable = false)
+    // can nang
+    @Column(name = "weigh", nullable = true)
     private Double weight;
-
-    @Column(name = "blood_pressure", nullable = false)
+    // huyet ap
+    @Column(name = "blood_pressure", nullable = true)
     private Integer bloodPressure;
-
-    @Column(name = "heartbeat", nullable = false)
+    // nhip tim
+    @Column(name = "heartbeat", nullable = true)
     private Integer heartbeat;
-
-    @Column(name = "temperature", nullable = false)
+    // nhiet do
+    @Column(name = "temperature", nullable = true)
     private Double temperature;
-
-    @Column(name = "awareness", nullable = false)
+    // nhan thuc, tam trang, ngay, ghi chu
+    @Column(name = "awareness", nullable = true)
     private String awareness;
-
-    @Column(name = "mood", nullable = false)
+    // tam trang
+    @Column(name = "mood", nullable = true)
     private String mood;
-
-    @Column(name = "date", nullable = false)
+    // ngay
+    @Column(name = "date", nullable = true)
     private Date date;
-
+    // ghi chu
     @Column(name = "note", nullable = false, columnDefinition = "LONGTEXT")
     private String note;
 

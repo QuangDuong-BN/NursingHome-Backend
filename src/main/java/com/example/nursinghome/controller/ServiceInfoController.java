@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/service-info")
+@RequestMapping("/service_info")
 public class ServiceInfoController {
     private final ServiceInfoService serviceInfoService;
     @PostMapping("/add")
-    public String AddServiceInfo(HttpServletRequest request, @RequestBody ServiceInfoRequest serviceInfoRequest) {
+    public ResponseEntity<?> AddServiceInfo(HttpServletRequest request, @RequestBody ServiceInfoRequest serviceInfoRequest) {
         serviceInfoService.AddServiceInfo(request, serviceInfoRequest);
-        return "success";
+        return ResponseEntity.ok("success");
     }
 
-    @GetMapping("/get-all")
+    @GetMapping("/get_all")
     public ResponseEntity<?> GetServiceInfo(HttpServletRequest request) {
         return ResponseEntity.ok(serviceInfoService.getAllServiceInfo());
     }
