@@ -1,7 +1,7 @@
 package com.example.nursinghome.entity;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,28 +24,28 @@ public class HealthRecord {
     @JoinColumn(name = "user_id_fk", nullable = false)
     private User user;
     // can nang
-    @Column(name = "weigh", nullable = true)
+    @Column(name = "weigh")
     private Double weight;
     // huyet ap
-    @Column(name = "blood_pressure", nullable = true)
+    @Column(name = "blood_pressure")
     private Integer bloodPressure;
     // nhip tim
-    @Column(name = "heartbeat", nullable = true)
+    @Column(name = "heartbeat")
     private Integer heartbeat;
     // nhiet do
-    @Column(name = "temperature", nullable = true)
+    @Column(name = "temperature")
     private Double temperature;
     // nhan thuc, tam trang, ngay, ghi chu
-    @Column(name = "awareness", nullable = true)
+    @Column(name = "awareness")
     private String awareness;
     // tam trang
-    @Column(name = "mood", nullable = true)
+    @Column(name = "mood")
     private String mood;
     // ngay
-    @Column(name = "date", nullable = true)
-    private Date date;
+    @Column(name = "date")
+    private Timestamp date;
     // ghi chu
-    @Column(name = "note", nullable = false, columnDefinition = "LONGTEXT")
+    @Column(name = "note", columnDefinition = "LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String note;
 
     // Getters and setters

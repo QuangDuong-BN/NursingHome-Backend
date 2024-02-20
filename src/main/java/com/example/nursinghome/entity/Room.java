@@ -15,22 +15,22 @@ public class Room {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = true, columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String name;
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", nullable = true)
     private String type;
 
-    @Column(name = "max_people", nullable = false)
+    @Column(name = "max_people", nullable = true)
     private Integer maxPeople;
 
-    @Column(name = "current_people", nullable = false)
+    @Column(name = "current_people", nullable = true)
     private Integer currentPeople;
 
-    @Column(name = "list_id_user", nullable = false, columnDefinition = "JSON")
+    @Column(name = "list_id_user", nullable = true, columnDefinition = "JSON")
     private String listIdUser;
 
-    @Column(name = "describe_room", nullable = false, columnDefinition = "LONGTEXT")
+    @Column(name = "describe_room", nullable = true, columnDefinition = "LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String description;
 
     // Getters and setters

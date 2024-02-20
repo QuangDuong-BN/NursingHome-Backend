@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -19,6 +20,6 @@ public class HealthRecordDTO {
     private Double temperature;
     private String awareness;
     private String mood;
-    private Date date;
+    private Timestamp date;
     private String note;
 }

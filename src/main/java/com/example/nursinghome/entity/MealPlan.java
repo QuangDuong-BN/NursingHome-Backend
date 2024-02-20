@@ -1,6 +1,7 @@
 package com.example.nursinghome.entity;
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,19 +23,19 @@ public class MealPlan {
     @JoinColumn(name = "user_id_fk", nullable = false)
     private User user;
 
-    @Column(name = "breakfast", nullable = false, columnDefinition = "JSON")
+    @Column(name = "breakfast", nullable = true, columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String breakfast;
 
-    @Column(name = "lunch", nullable = false, columnDefinition = "JSON")
+    @Column(name = "lunch", nullable = true, columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String lunch;
 
-    @Column(name = "dinner", nullable = false, columnDefinition = "JSON")
+    @Column(name = "dinner", nullable = true, columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String dinner;
 
     @Column(name = "date", nullable = false,columnDefinition = "DATETIME")
-    private Date date;
+    private Timestamp date;
 
-    @Column(name = "note", nullable = false, columnDefinition = "LONGTEXT")
+    @Column(name = "note", nullable = false, columnDefinition = "LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String note;
 
     // Getters and setters

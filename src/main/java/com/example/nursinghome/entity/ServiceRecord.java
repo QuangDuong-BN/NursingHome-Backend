@@ -1,6 +1,7 @@
 package com.example.nursinghome.entity;
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,10 +33,10 @@ public class ServiceRecord {
     private Double price;
 
     @Column(name = "production_date", nullable = false)
-    private Date productionDate;
+    private Timestamp productionDate;
 
     @Column(name = "expiration_date", nullable = false)
-    private Date expirationDate;
+    private Timestamp expirationDate;
 
     @Column(name = "status", nullable = false)
     private String status;
