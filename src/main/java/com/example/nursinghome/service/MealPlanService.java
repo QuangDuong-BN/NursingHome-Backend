@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,13 @@ public class MealPlanService {
 
     public List<MealPlanDTO> getAllMealPlanByUser(HttpServletRequest httpServletRequest, User user) {
         List<MealPlan> mealPlans = mealPlanRepository.findAllByUser(user);
+        return mealPlans.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<MealPlanDTO> getMealPlanByUserAndDate(HttpServletRequest httpServletRequest, User user, Timestamp date) {
+        List<MealPlan> mealPlans = mealPlanRepository.findAllByUserAndDate(user, date);
         return mealPlans.stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
