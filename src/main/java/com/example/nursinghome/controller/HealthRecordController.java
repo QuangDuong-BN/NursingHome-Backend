@@ -1,5 +1,6 @@
 package com.example.nursinghome.controller;
 
+import com.example.nursinghome.entity.User;
 import com.example.nursinghome.entitydto.HealthRecordDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,12 @@ public class HealthRecordController {
     public ResponseEntity<?> AddHealthRecord(HttpServletRequest request, @RequestBody HealthRecordDTO healthRecordRequest) {
         healthRecordService.addHealthRecord(request, healthRecordRequest);
         return ResponseEntity.ok("success");
+    }
+
+    @GetMapping("/get_all_by_user")
+    public ResponseEntity<?> GetHealthRecordByUser(HttpServletRequest request, @RequestParam("id") Long userId) {
+        User user = new User();
+        user.setId(userId);
+        return ResponseEntity.ok(healthRecordService.getAllHealthRecordByUser(request,user));
     }
 }

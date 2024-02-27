@@ -7,4 +7,5 @@ public enum RoleUser {
     STAFF,
     COOK,
     CLEANER,
+    USER
 }

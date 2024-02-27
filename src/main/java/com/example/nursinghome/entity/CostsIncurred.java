@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 @Table(name = "costs_incurred")
+// chi phi phat sinh
 public class CostsIncurred {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,7 @@ public class CostsIncurred {
 
     @Column(name = "date", nullable = true)
     private Timestamp date;
-
+    // so luong
     @Column(name = "quantity", nullable = true)
     private Integer quantity;
 

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,16 +46,24 @@ public class HealthRecordService {
                 .collect(Collectors.toList());
     }
 
+    public List<HealthRecordDTO> getAllHealthRecordByUser(HttpServletRequest httpServletRequest,User user) {
+        List<HealthRecord> healthRecords = healthRecordRepository.findAllByUser(user);
+        return healthRecords.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
     private HealthRecordDTO mapToDTO(HealthRecord healthRecord) {
         HealthRecordDTO healthRecordDTO = new HealthRecordDTO();
-        healthRecordDTO.setWeight(healthRecordDTO.getWeight());
-        healthRecordDTO.setBloodPressure(healthRecordDTO.getBloodPressure());
-        healthRecordDTO.setHeartbeat(healthRecordDTO.getHeartbeat());
-        healthRecordDTO.setTemperature(healthRecordDTO.getTemperature());
-        healthRecordDTO.setAwareness(healthRecordDTO.getAwareness());
-        healthRecordDTO.setMood(healthRecordDTO.getMood());
-        healthRecordDTO.setDate(healthRecordDTO.getDate());
-        healthRecordDTO.setNote(healthRecordDTO.getNote());
+        healthRecordDTO.setUserId(healthRecord.getUser().getId());
+        healthRecordDTO.setWeight(healthRecord.getWeight());
+        healthRecordDTO.setBloodPressure(healthRecord.getBloodPressure());
+        healthRecordDTO.setHeartbeat(healthRecord.getHeartbeat());
+        healthRecordDTO.setTemperature(healthRecord.getTemperature());
+        healthRecordDTO.setAwareness(healthRecord.getAwareness());
+        healthRecordDTO.setMood(healthRecord.getMood());
+        healthRecordDTO.setDate(healthRecord.getDate());
+        healthRecordDTO.setNote(healthRecord.getNote());
         return healthRecordDTO;
     }
 }
