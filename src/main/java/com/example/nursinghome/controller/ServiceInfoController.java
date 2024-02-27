@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class ServiceInfoController {
     private final ServiceInfoService serviceInfoService;
     @PostMapping("/add")
-    public ResponseEntity<?> AddServiceInfo(HttpServletRequest request, @RequestBody ServiceInfoRequest serviceInfoRequest) {
+    public ResponseEntity<?> AddServiceInfo(HttpServletRequest request, @ModelAttribute ServiceInfoRequest serviceInfoRequest) {
         serviceInfoService.AddServiceInfo(request, serviceInfoRequest);
         return ResponseEntity.ok("success");
     }
