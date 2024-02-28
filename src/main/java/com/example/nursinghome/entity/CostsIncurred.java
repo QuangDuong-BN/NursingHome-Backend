@@ -26,16 +26,16 @@ public class CostsIncurred {
     @JoinColumn(name = "user_id_fk", nullable = false)
     private User user;
 
-    @Column(name = "date", nullable = true)
+    @Column(name = "date")
     private Timestamp date;
     // so luong
-    @Column(name = "quantity", nullable = true)
+    @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "price", nullable = true)
+    @Column(name = "price")
     private Double price;
 
-    @Column(name = "note", nullable = true, columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
+    @Column(name = "note", columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String note;
 
 }
