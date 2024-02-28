@@ -28,6 +28,7 @@ public class MyApplicationRunner implements ApplicationRunner {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         System.out.println("Công việc đã được thực hiện khi ứng dụng khởi động:");

@@ -4,7 +4,6 @@ public enum RoleUser {
     ADMIN,
     NURSE,
     DOCTOR,
-    STAFF,
     COOK,
     CLEANER,
     USER

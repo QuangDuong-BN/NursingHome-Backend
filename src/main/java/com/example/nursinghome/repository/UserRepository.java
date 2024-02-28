@@ -1,6 +1,7 @@
 package com.example.nursinghome.repository;
 
 import com.example.nursinghome.entity.User;
+import com.example.nursinghome.enumcustom.RoleUser;
 import jakarta.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -40,4 +41,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.name = :name, u.email = :email, u.username = :username WHERE u.id = :id")
     void updateById( @Param("id") Integer id, @Param("name") String name, @Param("email") String email, @Param("username") String username);
+
+    @Query("SELECT COUNT(u) FROM User u WHERE u.role = :roleStaff")
+    Integer countAllByRole(RoleUser roleStaff);
 }

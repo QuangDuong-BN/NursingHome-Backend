@@ -35,6 +35,9 @@ public class CostsIncurred {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "status")
+    private String status;
+
     @Column(name = "note", columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String note;
 
