@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -22,10 +23,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, columnDefinition = "VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String name;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone")
     private String phone;
 
     @Enumerated(EnumType.STRING)
@@ -35,11 +36,22 @@ public class User implements UserDetails {
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "date_of_birth")
+    private Timestamp dateOfBirth;
+
+    @ManyToOne()
+    @JoinColumn(name = "family_member_id_fk")
+    private User familyMember; // Khóa ngoại tham chiếu đến người nhà quản lý dịch vụ người dùng
+
 
     @Override
     public String getPassword() {

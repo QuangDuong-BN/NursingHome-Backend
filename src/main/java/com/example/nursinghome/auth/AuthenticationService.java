@@ -38,15 +38,24 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(RoleUser.valueOf(request.getRole()))
+                .role(request.getRole())
                 .phone(request.getPhone())
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .id(null)
+                .name(user.getName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .username(user.getUsername())
+                .phone(user.getPhone())
+                .role(user.getRole())
                 .build();
     }
+
+
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(      //this authentication manager take an object of type username and password authentication token
@@ -60,7 +69,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
                 .token(jwtToken)
-                .id(user.getId())
+                .id(null)
                 .name(user.getName())
                 .email(user.getEmail())
                 .password(user.getPassword())
@@ -72,6 +81,39 @@ public class AuthenticationService {
 //        return AuthenticationResponse.builder()
 //                .token(jwtToken)
 //                .build();
+    }
+
+
+    public AuthenticationResponse registerForFamilyMember(RegisterRequest request) {
+        if (userRepository.countByEmail(request.getEmail()) > 0 ||
+                userRepository.countByUsername(request.getUsername()) >0) {
+            throw new EmailAlreadyExistException("Email or username already exists");
+        }
+        // xac dinh role
+        RoleUser role = request.getRole();
+        if (RoleUser.ADMIN != role && RoleUser.FAMILY_MEMBER != role){
+            throw  new RoleException("You don't have permission to register as an ADMIN or FAMILY_MEMBER");
+        }
+
+        var user = User.builder()
+                .name(request.getName())
+                .username(request.getUsername())
+                .role(RoleUser.SERVICE_USER)
+                .dateOfBirth(request.getDateOfBirth())
+                .address(request.getAddress())
+                .build();
+        userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .id(null)
+                .name(user.getName())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .username(user.getUsername())
+                .phone(user.getPhone())
+                .role(user.getRole())
+                .build();
     }
 }
 

@@ -1,9 +1,12 @@
 package com.example.nursinghome.auth;
 
+import com.example.nursinghome.enumcustom.RoleUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 @Data
 @Builder
@@ -15,5 +18,7 @@ public class RegisterRequest {
     private String password;
     private String email;
     private String phone;
-    private String role;
+    private Timestamp dateOfBirth;
+    private String address;
+    private RoleUser role;
 }

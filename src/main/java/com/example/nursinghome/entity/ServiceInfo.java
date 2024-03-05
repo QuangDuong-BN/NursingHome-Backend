@@ -26,25 +26,40 @@ public class ServiceInfo {
     @Column(name = "type_service", nullable = true)
     private TypeService type;
 
-    @Column(name = "price_day", nullable = true)
+    @Column(name = "price_day")
     private Double priceDay;
 
-    @Column(name = "price_week", nullable = true)
+    @Column(name = "price_week")
     private Double priceWeek;
 
-    @Column(name = "price_month", nullable = true)
+    @Column(name = "price_month")
     private Double priceMonth;
 
-    @Column(name = "price_year", nullable = true)
+    @Column(name = "price_year")
     private Double priceYear;
 
-    @Column(name = "ticket_prices ", nullable = true)
+    @Column(name = "ticket_prices ")
     private Double ticketPrices;
-
-    @Column(name = "description_service", nullable = true, columnDefinition = "TEXT")
+    // mo ta ngan gon
+    @Column(name = "description_service", columnDefinition = "TEXT")
     private String descriptionService;
-
-    @Column(name = "image_url", nullable = true)
+    // doi tuong tham gi
+    @Column(name = "participant_details", columnDefinition = "TEXT")
+    private String participantDetails;
+    // tien ich
+    @Column(name = "amenities", columnDefinition = "TEXT")
+    private String amenities;
+    // che do dinh duong
+    @Column(name = "nutrition_mode", columnDefinition = "TEXT")
+    private String nutritionMode;
+    // hoat dong cong dong
+    @Column(name = "community_activities", columnDefinition = "TEXT")
+    private String communityActivities;
+    // che do cham soc
+    @Column(name = "care_regimen", columnDefinition = "TEXT")
+    private String careRegimen;
+    // anh dai dien
+    @Column(name = "image_url")
     private String imageUrl;
-    // Getters and setters
+
 }

@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -19,5 +21,7 @@ public class AuthenticationResponse {
     private String password;
     private String username;
     private String phone;
+    private Timestamp dateOfBirth;
+    private String address;
     private RoleUser role;
 }

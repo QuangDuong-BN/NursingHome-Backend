@@ -1,6 +1,8 @@
 package com.example.nursinghome.entity;
+import com.example.nursinghome.enumcustom.RoomType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "room")
 public class Room {
     @Id
@@ -15,22 +18,14 @@ public class Room {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = true, columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
+    @Column(name = "name", columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String name;
 
-    @Column(name = "type", nullable = true)
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "room_type")
+    private RoomType roomType;
 
-    @Column(name = "max_people", nullable = true)
-    private Integer maxPeople;
-
-    @Column(name = "current_people", nullable = true)
-    private Integer currentPeople;
-
-    @Column(name = "list_id_user", nullable = true, columnDefinition = "JSON")
-    private String listIdUser;
-
-    @Column(name = "describe_room", nullable = true, columnDefinition = "LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
+    @Column(name = "describe_room", columnDefinition = "LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String description;
 
     // Getters and setters

@@ -20,7 +20,7 @@ public class StatisticsService {
     }
 
     public Integer countUser(HttpServletRequest request) {
-        return userRepository.countAllByRole(RoleUser.USER);
+        return userRepository.countAllByRole(RoleUser.SERVICE_USER);
     }
 
     public Double countRevenue(HttpServletRequest request) {

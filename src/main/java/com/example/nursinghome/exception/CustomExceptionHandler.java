@@ -37,6 +37,12 @@ public class CustomExceptionHandler {
         return new ErrorResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
+    @ExceptionHandler(NotImplementedException.class)
+    @ResponseStatus(HttpStatus.NOT_IMPLEMENTED)
+    public ErrorResponse handlerNotImplementedException(NotImplementedException ex) {
+        return new ErrorResponse(HttpStatus.NOT_IMPLEMENTED, ex.getMessage());
+    }
+
 
 
 }

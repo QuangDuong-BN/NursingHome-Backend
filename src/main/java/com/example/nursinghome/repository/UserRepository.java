@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -44,4 +45,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT COUNT(u) FROM User u WHERE u.role = :roleStaff")
     Integer countAllByRole(RoleUser roleStaff);
+
+    @Query("SELECT u FROM User u WHERE u.username = :username")
+    User getUerByUserName(String username);
+
+    @Query("SELECT u FROM User u WHERE u.familyMember = :familyMember")
+    List<User> getAllUserByFamilyMember(User familyMember);
 }
