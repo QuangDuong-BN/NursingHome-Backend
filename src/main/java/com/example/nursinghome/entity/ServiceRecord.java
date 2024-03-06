@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "service_record")
 public class ServiceRecord {
 
@@ -22,7 +24,7 @@ public class ServiceRecord {
 
     @ManyToOne
     @JoinColumn(name = "user_id_fk", nullable = false)
-    private User user;
+    private User userIdFk;
 
     @ManyToOne
     @JoinColumn(name = "service_info_id_fk", nullable = false)
@@ -31,9 +33,6 @@ public class ServiceRecord {
     @OneToOne
     @JoinColumn(name = "bed_record_id_fk", nullable = false)
     private BedRecord bedRecordIdFk;
-
-    @Column(name = "name", nullable = false)
-    private String name;
 
     @Column(name = "price", nullable = false)
     private Double price;

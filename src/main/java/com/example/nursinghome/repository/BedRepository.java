@@ -10,4 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface BedRepository extends JpaRepository<Bed, Long>{
     @Query("SELECT count(b) FROM Bed b WHERE b.roomIdFk = ?1")
     int countBedByRoomIdFk(Room room);
+
+    @Query("SELECT b FROM Bed b WHERE b.id = ?1")
+    Bed getBedByID(Long id);
 }

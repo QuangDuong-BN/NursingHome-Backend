@@ -12,13 +12,14 @@ import org.springframework.stereotype.Service;
 public class BedRecordService {
     private final BedRecordRepository bedRecordRepository;
 
-    public void addBedRecord(HttpServletRequest httpServletRequest, BedRecordDTO bedRecordDTO) {
+    public BedRecord addBedRecord(HttpServletRequest httpServletRequest, BedRecordDTO bedRecordDTO) {
         BedRecord bedRecord = BedRecord.builder()
                 .bedIdFk(bedRecordDTO.getBedIdFk())
                 .userIdFk(bedRecordDTO.getUserIdFk())
                 .productionDate(bedRecordDTO.getProductionDate())
                 .expirationDate(bedRecordDTO.getExpirationDate())
                 .build();
-        bedRecordRepository.save(bedRecord);
+        BedRecord savedBedRecord = bedRecordRepository.save(bedRecord);
+        return savedBedRecord;
     }
 }
