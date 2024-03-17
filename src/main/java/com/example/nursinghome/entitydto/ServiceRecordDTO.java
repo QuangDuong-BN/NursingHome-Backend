@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 @Data
 @Builder
 public class ServiceRecordDTO {
+    private Long userIdFk;
     private Long serviceInfoIdFk;
     private Long bedIdFk;
     private Timestamp productionDate;

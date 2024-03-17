@@ -24,7 +24,7 @@ public class BedRecord {
     @JoinColumn(name = "bed_id_fk", nullable = false)
     private Bed bedIdFk;
 
-    @OneToOne()
+    @ManyToOne()
     @JoinColumn(name = "user_id_fk", nullable = false)
     private User userIdFk;
 

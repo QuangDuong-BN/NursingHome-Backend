@@ -38,8 +38,4 @@ public class MealPlanController {
         return ResponseEntity.ok("success");
     }
 
-
-
-
-
 }

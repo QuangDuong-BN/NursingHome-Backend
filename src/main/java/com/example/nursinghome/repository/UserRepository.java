@@ -2,6 +2,7 @@ package com.example.nursinghome.repository;
 
 import com.example.nursinghome.entity.User;
 import com.example.nursinghome.enumcustom.RoleUser;
+import com.example.nursinghome.projectioninterface.UserProjection;
 import jakarta.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -49,6 +50,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.username = :username")
     User getUerByUserName(String username);
 
-    @Query("SELECT u FROM User u WHERE u.familyMember = :familyMember")
-    List<User> getAllUserByFamilyMember(User familyMember);
+    @Query("SELECT u.id AS id, u.name AS name, u.address AS address, u.gender AS gender, u.imageUrl AS imageUrl FROM User u WHERE u.familyMember = :familyMember")
+    List<UserProjection> getAllUserByFamilyMember(User familyMember);
+    @Query("SELECT u FROM User u WHERE u.id = :id")
+    User getUserById(Long id);
 }

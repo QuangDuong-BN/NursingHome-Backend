@@ -6,11 +6,14 @@ import com.example.nursinghome.entity.Room;
 import com.example.nursinghome.entitydto.BedDTO;
 import com.example.nursinghome.enumcustom.RoomType;
 import com.example.nursinghome.exception.NotImplementedException;
+import com.example.nursinghome.projectioninterface.BedProjectioln;
 import com.example.nursinghome.repository.BedRepository;
 import com.example.nursinghome.repository.RoomRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -18,6 +21,7 @@ public class BedService {
     private final JwtService jwtService;
     private final RoomRepository roomRepository;
     private final BedRepository bedRepository;
+    private final RoomService roomService;
 
     public void addBed(HttpServletRequest httpServletRequest, BedDTO bedDTO) {
         String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
@@ -47,9 +51,17 @@ public class BedService {
         else {
             throw new NotImplementedException("Room is full (bed count = " + bedCount + ", max bed = " + maxBed + ")");
         }
+    }
 
+    public List<BedProjectioln> getListBedByRoomId(HttpServletRequest httpServletRequest, Long roomIdFk) {
+        String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
+        token = token.substring(7); // Loại bỏ "Bearer " từ token
+        String username = jwtService.extractUsername(token);
+//        if (!username.equals("ADMIN")) {
+//            throw new RuntimeException("You don't have permission to get list bed");
+//        }
 
-
+        return bedRepository.getListBedByRoomIdFk(roomRepository.getRoomByID(roomIdFk));
     }
 
 }

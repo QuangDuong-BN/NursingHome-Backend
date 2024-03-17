@@ -1,5 +1,6 @@
 package com.example.nursinghome.service;
 
+import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.entity.MealPlan;
 import com.example.nursinghome.entity.User;
 import com.example.nursinghome.entitydto.MealPlanDTO;
@@ -21,9 +22,15 @@ public class MealPlanService {
     private final UserRepository UserRepository;
     private final HealthRecordRepository healthRecordRepository;
     private final MealPlanRepository mealPlanRepository;
-
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
 
     public void addMealPlan(HttpServletRequest httpServletRequest, MealPlanDTO mealPlanDTO) {
+        String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
+        token = token.substring(7); // Loại bỏ "Bearer " từ token
+        String username = jwtService.extractUsername(token);
+        User creator = userRepository.getUerByUserName(username);
+
         var mealPlan = MealPlan.builder()
                 .breakfast(mealPlanDTO.getBreakfast())
                 .lunch(mealPlanDTO.getLunch())
@@ -31,6 +38,7 @@ public class MealPlanService {
                 .date(mealPlanDTO.getDate())
                 .note(mealPlanDTO.getNote())
                 .user(UserRepository.findById(mealPlanDTO.getUserId()).orElse(null))
+                .creator(creator)
                 .build();
         mealPlanRepository.save(mealPlan);
     }
@@ -41,7 +49,6 @@ public class MealPlanService {
 //                .map(this::mapToDTO)
 //                .collect(Collectors.toList());
 //    }
-
     public List<MealPlanDTO> getAllMealPlanByUser(HttpServletRequest httpServletRequest, User user) {
         List<MealPlan> mealPlans = mealPlanRepository.findAllByUser(user);
         return mealPlans.stream()

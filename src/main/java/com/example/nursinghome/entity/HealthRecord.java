@@ -23,6 +23,10 @@ public class HealthRecord {
     @ManyToOne
     @JoinColumn(name = "user_id_fk", nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_user_id_fk", nullable = false)
+    private User creator;
     // can nang
     @Column(name = "weigh")
     private Double weight;

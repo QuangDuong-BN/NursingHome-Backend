@@ -1,5 +1,6 @@
 package com.example.nursinghome.entity;
 
+import com.example.nursinghome.enumcustom.GenderUser;
 import com.example.nursinghome.enumcustom.RoleUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -22,6 +24,10 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne()
+    @JoinColumn(name = "family_member_id_fk")
+    private User familyMember; // Khóa ngoại tham chiếu đến người nhà quản lý dịch vụ người dùng
 
     @Column(name = "name", nullable = false, columnDefinition = "VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String name;
@@ -46,11 +52,14 @@ public class User implements UserDetails {
     private String address;
 
     @Column(name = "date_of_birth")
-    private Timestamp dateOfBirth;
+    private Date dateOfBirth;
 
-    @ManyToOne()
-    @JoinColumn(name = "family_member_id_fk")
-    private User familyMember; // Khóa ngoại tham chiếu đến người nhà quản lý dịch vụ người dùng
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    private GenderUser gender;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
 
     @Override

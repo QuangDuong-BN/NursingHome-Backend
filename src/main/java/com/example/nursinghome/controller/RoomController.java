@@ -1,6 +1,7 @@
 package com.example.nursinghome.controller;
 
 import com.example.nursinghome.entitydto.RoomDTO;
+import com.example.nursinghome.enumcustom.RoomType;
 import com.example.nursinghome.service.RoomService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -20,5 +21,10 @@ public class RoomController {
     @GetMapping("/get_all")
     public ResponseEntity<?> getAllRoom(){
         return ResponseEntity.ok(roomService.getListRoom());
+    }
+
+    @GetMapping("/get_list_name_room_by_room_type")
+    public ResponseEntity<?> getListNameRoomByRoomType(HttpServletRequest httpServletRequest, @RequestParam("roomType") RoomType roomType){
+        return ResponseEntity.ok(roomService.getListNameRoomByRoomType(httpServletRequest,roomType));
     }
 }

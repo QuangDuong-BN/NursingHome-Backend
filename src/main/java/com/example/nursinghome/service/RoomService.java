@@ -2,6 +2,8 @@ package com.example.nursinghome.service;
 
 import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.entitydto.RoomDTO;
+import com.example.nursinghome.enumcustom.RoomType;
+import com.example.nursinghome.projectioninterface.GetNameRoomProjection;
 import com.example.nursinghome.repository.RoomRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,11 @@ public class RoomService {
                 .build();
         roomRepository.save(room);
     }
+
+    public List<GetNameRoomProjection> getListNameRoomByRoomType(HttpServletRequest httpServletRequest, RoomType roomType){
+        return roomRepository.getListNameRoomByRoomType(roomType);
+    }
+
 
     public List<RoomDTO> getListRoom(){
         List<Room> rooms = roomRepository.findAll();

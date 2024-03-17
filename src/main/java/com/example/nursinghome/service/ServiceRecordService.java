@@ -26,11 +26,13 @@ public class ServiceRecordService {
     private final ServiceInfoRepository serviceInfoRepository;
     private final UserRepository userRepository;
     public void addServiceRecord(HttpServletRequest httpServletRequest, ServiceRecordDTO serviceRecordDTO) {
+        // check role
         String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
         String username = jwtService.extractUsername(token);
+
         // thong tin nguoi du dung
-        User user = userRepository.getUerByUserName(username);
+        User user = userRepository.getUserById(serviceRecordDTO.getUserIdFk());
 
         // service info
         ServiceInfo serviceInfo = serviceInfoRepository.getServiceInfoById(serviceRecordDTO.getServiceInfoIdFk());
@@ -39,8 +41,7 @@ public class ServiceRecordService {
         Timestamp productionDate = serviceRecordDTO.getProductionDate();
         Timestamp expirationDate = serviceRecordDTO.getExpirationDate();
 
-//        Timestamp productionDate = Timestamp.valueOf("2024-03-05 00:00:00");
-//        Timestamp expirationDate = Timestamp.valueOf("2024-03-10 00:00:00");
+
         // Chuyển Timestamp thành LocalDate
         LocalDate productionLocalDate = productionDate.toLocalDateTime().toLocalDate();
         LocalDate expirationLocalDate = expirationDate.toLocalDateTime().toLocalDate();
@@ -49,6 +50,7 @@ public class ServiceRecordService {
 
         // dang ki giuong benh
         Bed bed = bedRepository.getBedByID(serviceRecordDTO.getBedIdFk());
+
         BedRecordDTO bedRecordDTO = BedRecordDTO.builder()
                 .bedIdFk(bed)
                 .userIdFk(user)
@@ -61,7 +63,7 @@ public class ServiceRecordService {
                 .userIdFk(user)
                 .serviceInfoIdFk(serviceInfo)
                 .bedRecordIdFk(BedRecord)
-                .price(120000.0*numberOfDays)
+                .price(120000.0*(numberOfDays+1))
                 .productionDate(productionDate)
                 .expirationDate(expirationDate)
                 .paymentStatus(PaymentStatus.UNPAID)

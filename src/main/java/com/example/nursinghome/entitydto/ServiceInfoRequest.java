@@ -20,5 +20,10 @@ public class ServiceInfoRequest {
     private Double priceYear;
     private Double ticketPrices;
     private String descriptionService;
-    private MultipartFile multipartFile;
+    private String amenities;
+    private String nutritionMode;
+    private String communityActivities;
+    private String careRegimen;
+    private MultipartFile imageIcon;
+    private MultipartFile imagePrice;
 }

@@ -24,10 +24,16 @@ public class HealthRecordController {
         return ResponseEntity.ok("success");
     }
 
-    @GetMapping("/get_all_by_user")
-    public ResponseEntity<?> GetHealthRecordByUser(HttpServletRequest request, @RequestParam("id") Long userId) {
+//    @GetMapping("/get_by_token")
+//    public ResponseEntity<?> GetHealthRecordByUser(HttpServletRequest request) {
+//
+//        return ResponseEntity.ok(healthRecordService.getAllHealthRecordById(request,user));
+//    }
+
+    @GetMapping("/get_by_id")
+    public ResponseEntity<?> getByIdForAdmin(HttpServletRequest request, @RequestParam("id") Long userId) {
         User user = new User();
         user.setId(userId);
-        return ResponseEntity.ok(healthRecordService.getAllHealthRecordByUser(request,user));
+        return ResponseEntity.ok(healthRecordService.getAllHealthRecordById(request,user));
     }
 }

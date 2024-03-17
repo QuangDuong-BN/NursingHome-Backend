@@ -19,5 +19,10 @@ public class ServiceInfoResponse {
     private Double priceYear;
     private Double ticketPrices;
     private String descriptionService;
-    private String imageUrl;
+    private String amenities;
+    private String nutritionMode;
+    private String communityActivities;
+    private String careRegimen;
+    private String imagePriceUrl;
+    private String imageIconUrl;
 }

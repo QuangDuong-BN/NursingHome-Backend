@@ -1,12 +1,12 @@
 package com.example.nursinghome.entity;
-import jakarta.persistence.*;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,6 +25,10 @@ public class MealPlan {
     @JoinColumn(name = "user_id_fk", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "creator_user_id_fk", nullable = false)
+    private User creator;
+
     @Column(name = "breakfast", columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String breakfast;
 
@@ -34,7 +38,7 @@ public class MealPlan {
     @Column(name = "dinner", columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String dinner;
 
-    @Column(name = "date",columnDefinition = "DATETIME")
+    @Column(name = "date", columnDefinition = "DATETIME")
     private Timestamp date;
 
     @Column(name = "note", columnDefinition = "LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")

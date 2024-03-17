@@ -59,7 +59,11 @@ public class ServiceInfo {
     @Column(name = "care_regimen", columnDefinition = "TEXT")
     private String careRegimen;
     // anh dai dien
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "image_url_icon")
+    private String imageUrlIcon;
+
+    @Column(name = "image_url_price")
+    private String imageUrlPrice;
+
 
 }

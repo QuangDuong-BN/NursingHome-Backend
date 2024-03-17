@@ -14,13 +14,24 @@ import org.springframework.web.bind.annotation.*;
 public class ServiceInfoController {
     private final ServiceInfoService serviceInfoService;
     @PostMapping("/add")
-    public ResponseEntity<?> AddServiceInfo(HttpServletRequest request, @ModelAttribute ServiceInfoRequest serviceInfoRequest) {
+    public ResponseEntity<?> addServiceInfo(HttpServletRequest request, @ModelAttribute ServiceInfoRequest serviceInfoRequest) {
         serviceInfoService.AddServiceInfo(request, serviceInfoRequest);
         return ResponseEntity.ok("success");
     }
 
     @GetMapping("/get_all")
-    public ResponseEntity<?> GetServiceInfo(HttpServletRequest request) {
+    public ResponseEntity<?> getServiceInfo1(HttpServletRequest request) {
         return ResponseEntity.ok(serviceInfoService.getAllServiceInfo());
     }
+
+    @GetMapping("/get_all_for_list_service_info")
+    public ResponseEntity<?> getServiceInfo2(HttpServletRequest request) {
+        return ResponseEntity.ok(serviceInfoService.getAllServiceInfoProjection());
+    }
+
+    @GetMapping("/get_by_id")
+    public ResponseEntity<?> getServiceInfo3(HttpServletRequest request, @RequestParam Long id) {
+        return ResponseEntity.ok(serviceInfoService.getServiceInfoByid(id));
+    }
+
 }
