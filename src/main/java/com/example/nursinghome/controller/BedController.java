@@ -15,7 +15,7 @@ public class BedController {
     @PostMapping("/add")
     public ResponseEntity<?> addBed(HttpServletRequest httpServletRequest, @RequestBody BedDTO bedDTO) {
         bedService.addBed(httpServletRequest,bedDTO);
-        return ResponseEntity.ok("success");
+        return ResponseEntity.ok("success"); 
     }
     @GetMapping("/get_list_bed_by_room_id")
     public ResponseEntity<?> getListBedByRoomId(HttpServletRequest httpServletRequest, @RequestParam("id") Long roomIdFk) {

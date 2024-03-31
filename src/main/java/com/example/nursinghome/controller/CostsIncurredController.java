@@ -21,5 +21,4 @@ public class CostsIncurredController {
         costsIncurredService.addCostsIncurred(request, costsIncurredDTO);
         return ResponseEntity.ok("success");
     }
-
 }
