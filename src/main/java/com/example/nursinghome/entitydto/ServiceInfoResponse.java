@@ -20,6 +20,7 @@ public class ServiceInfoResponse {
     private Double ticketPrices;
     private String descriptionService;
     private String amenities;
+    private String participantDetails;
     private String nutritionMode;
     private String communityActivities;
     private String careRegimen;

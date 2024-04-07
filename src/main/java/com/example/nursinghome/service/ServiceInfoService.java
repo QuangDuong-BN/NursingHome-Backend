@@ -53,6 +53,7 @@ public class ServiceInfoService {
                     .priceMonth(serviceInfoRequest.getPriceMonth())
                     .priceYear(serviceInfoRequest.getPriceYear())
                     .ticketPrices(serviceInfoRequest.getTicketPrices())
+                    .participantDetails(serviceInfoRequest.getParticipantDetails())
                     .descriptionService(serviceInfoRequest.getDescriptionService())
                     .amenities(serviceInfoRequest.getAmenities())
                     .nutritionMode(serviceInfoRequest.getNutritionMode())
@@ -93,6 +94,7 @@ public class ServiceInfoService {
         dto.setPriceMonth(serviceInfo.getPriceMonth());
         dto.setPriceYear(serviceInfo.getPriceYear());
         dto.setTicketPrices(serviceInfo.getTicketPrices());
+        dto.setParticipantDetails(serviceInfo.getParticipantDetails());
         dto.setDescriptionService(serviceInfo.getDescriptionService());
         dto.setAmenities(serviceInfo.getAmenities());
         dto.setNutritionMode(serviceInfo.getNutritionMode());

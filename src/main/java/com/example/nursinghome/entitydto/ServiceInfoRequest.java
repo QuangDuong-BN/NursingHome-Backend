@@ -20,6 +20,7 @@ public class ServiceInfoRequest {
     private Double priceYear;
     private Double ticketPrices;
     private String descriptionService;
+    private String participantDetails;
     private String amenities;
     private String nutritionMode;
     private String communityActivities;
