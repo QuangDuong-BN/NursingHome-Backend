@@ -13,6 +13,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Optional;
 
 @Component
@@ -27,12 +30,16 @@ public class MyApplicationRunner implements ApplicationRunner {
     private JwtService jwtService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    private static final Logger logger = LoggerFactory.getLogger(MyApplicationRunner.class);
 
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         System.out.println("Công việc đã được thực hiện khi ứng dụng khởi động:");
         System.out.println("- Check và tạo admin nếu chưa được tạo.");
+        logger.info("Công việc đã được thực hiện khi ứng dụng khởi động:");
+        logger.info("- Check và tạo admin nếu chưa được tạo.");
+
         Optional<User> numberOfAdmin = userRepository.findByUsername("ADMIN");
         if (numberOfAdmin.isEmpty()) {
             var user = User.builder()

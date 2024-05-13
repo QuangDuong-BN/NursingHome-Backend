@@ -19,7 +19,6 @@ public class BedRecordService {
                 .productionDate(bedRecordDTO.getProductionDate())
                 .expirationDate(bedRecordDTO.getExpirationDate())
                 .build();
-        BedRecord savedBedRecord = bedRecordRepository.save(bedRecord);
-        return savedBedRecord;
+        return bedRecordRepository.save(bedRecord);
     }
 }

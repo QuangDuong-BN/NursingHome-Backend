@@ -16,6 +16,7 @@ import java.io.IOException;
 public class UserController {
     private final UserService userService;
 
+
     @GetMapping("/get_all_user")
     public ResponseEntity<?> getAllUser(HttpServletRequest request) {
         return ResponseEntity.ok(userService.getAllUser(request));
@@ -38,6 +39,6 @@ public class UserController {
 
     @PostMapping("/upload_image_for_user")
     public ResponseEntity<?> uploadImageForUser(HttpServletRequest httpServletRequest, @RequestParam("id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
-        return ResponseEntity.ok(userService.uploadImageForUser(httpServletRequest, id,file));
+        return ResponseEntity.ok(userService.uploadImageForUser(httpServletRequest, id, file));
     }
 }
