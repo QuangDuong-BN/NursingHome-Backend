@@ -15,6 +15,7 @@ import com.example.nursinghome.repository.ServiceRecordRepository;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -22,7 +23,6 @@ public class ServiceRecordService {
     private final ServiceRecordRepository serviceRecordRepository;
     private final JwtService jwtService;
     private final BedRepository bedRepository;
-    private final BedRecordService bedRecordService;
     private final ServiceInfoRepository serviceInfoRepository;
     private final UserRepository userRepository;
     public void addServiceRecord(HttpServletRequest httpServletRequest, ServiceRecordDTO serviceRecordDTO) {
@@ -30,6 +30,7 @@ public class ServiceRecordService {
         String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
         String username = jwtService.extractUsername(token);
+        User userFamily = userRepository.getUerByUserName(username);
 
         // thong tin nguoi du dung
         User user = userRepository.getUserById(serviceRecordDTO.getUserIdFk());
@@ -51,18 +52,19 @@ public class ServiceRecordService {
         // dang ki giuong benh
         Bed bed = bedRepository.getBedByID(serviceRecordDTO.getBedIdFk());
 
-        BedRecordDTO bedRecordDTO = BedRecordDTO.builder()
-                .bedIdFk(bed)
-                .userIdFk(user)
-                .productionDate(productionDate)
-                .expirationDate(expirationDate)
-                .build();
-        BedRecord BedRecord = bedRecordService.addBedRecord(httpServletRequest, bedRecordDTO);
+//        BedRecordDTO bedRecordDTO = BedRecordDTO.builder()
+//                .bedIdFk(bed)
+//                .userIdFk(user)
+//                .productionDate(productionDate)
+//                .expirationDate(expirationDate)
+//                .build();
+//        BedRecord BedRecord = bedRecordService.addBedRecord(httpServletRequest, bedRecordDTO);
 
         var serviceRecord = ServiceRecord.builder()
                 .userIdFk(user)
+                .familyMemberIdFk(userFamily)
                 .serviceInfoIdFk(serviceInfo)
-                .bedRecordIdFk(BedRecord)
+                .bedIdFk(bed)
                 .price(120000.0*(numberOfDays+1))
                 .productionDate(productionDate)
                 .expirationDate(expirationDate)
@@ -73,5 +75,13 @@ public class ServiceRecordService {
                 .build();
 
         serviceRecordRepository.save(serviceRecord);
+    }
+
+    public List<Object[]> getListServiceRecord(HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
+        token = token.substring(7); // Loại bỏ "Bearer " từ token
+        String username = jwtService.extractUsername(token);
+        User user = userRepository.getUerByUserName(username);
+        return serviceRecordRepository.getAllByIdFamilyMemberIdFk(user);
     }
 }

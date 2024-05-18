@@ -1,8 +1,7 @@
 package com.example.nursinghome.entity;
-import jakarta.persistence.*;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import com.example.nursinghome.enumcustom.TimeOfDay;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,14 +19,15 @@ public class Action {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id_fk", nullable = false)
+    @JoinColumn(name = "user_id_fk")
     private User user;
 
-//    @Column(name = "date", nullable = true)
-//    private Timestamp date;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "time_of_day")
+    private TimeOfDay timeOfDay;
 
-    @Column(name = "to_do_list", nullable = true, columnDefinition = "TEXT")
-    private String toDoList;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 
     // Getters and setters
 }

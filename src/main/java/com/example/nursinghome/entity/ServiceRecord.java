@@ -1,14 +1,14 @@
 package com.example.nursinghome.entity;
+
 import com.example.nursinghome.enumcustom.PaymentStatus;
 import com.example.nursinghome.enumcustom.RoomType;
 import jakarta.persistence.*;
-
-import java.sql.Timestamp;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,12 +27,16 @@ public class ServiceRecord {
     private User userIdFk;
 
     @ManyToOne
+    @JoinColumn(name = "family_member_id_fk", nullable = false)
+    private User familyMemberIdFk;
+
+    @ManyToOne
     @JoinColumn(name = "service_info_id_fk", nullable = false)
     private ServiceInfo serviceInfoIdFk;
 
     @OneToOne
-    @JoinColumn(name = "bed_record_id_fk", nullable = false)
-    private BedRecord bedRecordIdFk;
+    @JoinColumn(name = "bed_id_fk", nullable = false)
+    private Bed bedIdFk;
 
     @Column(name = "price", nullable = false)
     private Double price;
@@ -43,7 +47,8 @@ public class ServiceRecord {
     @Column(name = "expiration_date", nullable = false)
     private Timestamp expirationDate;
 
-    @Column(name = "payment_status", nullable = false,columnDefinition = "ENUM('PAID', 'UNPAID')")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "payment_status", nullable = false, columnDefinition = "ENUM('PAID', 'UNPAID')")
     private PaymentStatus paymentStatus;
 
     @Column(name = "booking_time", nullable = false)
@@ -53,7 +58,7 @@ public class ServiceRecord {
     private Timestamp paymentTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="room_type")
+    @Column(name = "room_type")
     private RoomType roomType;
 
     @Column(name = "describe_service", columnDefinition = "LONGTEXT")
