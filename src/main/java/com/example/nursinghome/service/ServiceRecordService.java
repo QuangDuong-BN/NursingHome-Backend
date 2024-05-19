@@ -8,6 +8,7 @@ import com.example.nursinghome.enumcustom.PaymentStatus;
 import com.example.nursinghome.repository.BedRepository;
 import com.example.nursinghome.repository.ServiceInfoRepository;
 import com.example.nursinghome.repository.UserRepository;
+import jakarta.persistence.Tuple;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -68,7 +69,7 @@ public class ServiceRecordService {
                 .price(120000.0*(numberOfDays+1))
                 .productionDate(productionDate)
                 .expirationDate(expirationDate)
-                .paymentStatus(PaymentStatus.UNPAID)
+                .paymentStatus(PaymentStatus.PAID)
                 .bookingTime(new Timestamp(System.currentTimeMillis()))
                 .roomType(serviceRecordDTO.getRoomType())
                 .paymentTime(null)

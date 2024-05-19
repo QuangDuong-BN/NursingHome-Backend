@@ -46,7 +46,7 @@ public class MyApplicationRunner implements ApplicationRunner {
         if (numberOfAdmin.isEmpty()) {
             var user = User.builder()
                     .name("ADMIN")
-                    .email("ADMIN.gmail.com")
+                    .email("admin@lotuscare.com")
                     .username("ADMIN")
                     .password(passwordEncoder.encode("ADMIN"))
                     .role(RoleUser.ADMIN)
