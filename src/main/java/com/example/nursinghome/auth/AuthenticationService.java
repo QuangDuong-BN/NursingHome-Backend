@@ -77,6 +77,7 @@ public class AuthenticationService {
                 .phone(user.getPhone())
                 .role(user.getRole())
                 .address(user.getAddress())
+                .gender(user.getGender())
                 .imageUrl(user.getImageUrl())
                 .build();
         return authenticationResponse;

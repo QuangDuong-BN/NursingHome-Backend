@@ -14,32 +14,25 @@ import java.sql.Date;
 @Data
 @Entity
 @Builder
-@Table(name = "action")
-public class Action {
-
+@Table(name = "visit_record")
+public class VisitRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id_fk")
-    private User user;
+    @ManyToOne()
+    @JoinColumn(name = "visitor_id_fk")
+    private User visitor; // Khóa ngoại tham chiếu đến người dùng
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne()
+    @JoinColumn(name = "visited_id_fk")
+    private User visited; // Khóa ngoại tham chiếu đến người dùng
 
     @Enumerated(EnumType.STRING)
     @Column(name = "time_of_day")
     private TimeOfDay timeOfDay;
 
-    @Column(name = "date_of_action")
-    private Date dateOfAction;
-
-    @Column(name = "is_visitable")
-    private Boolean isVisitable;
-
-    @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
+    @Column(name = "visit_date")
+    private Date visitDate;
 
 }

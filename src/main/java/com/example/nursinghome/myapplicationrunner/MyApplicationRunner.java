@@ -50,7 +50,7 @@ public class MyApplicationRunner implements ApplicationRunner {
                     .username("ADMIN")
                     .password(passwordEncoder.encode("ADMIN"))
                     .role(RoleUser.ADMIN)
-                    .phone("123456789")
+                    .phone("0344381803")
                     .build();
             userRepository.save(user);
         }

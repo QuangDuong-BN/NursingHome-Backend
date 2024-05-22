@@ -106,16 +106,20 @@ public class UserService {
         throw new RoleException("You don't have permission an admin");
     }
 
-    public User getUserByID(HttpServletRequest request) {
+    public User getUser(HttpServletRequest request) {
         String token = request.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
         String username = jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
+        return userRepository.findByUsername(username).orElse(null);
+//        if (username.compareTo("ADMIN") == 0) {
+//            return userRepository.findByUsername(username).orElse(null);
+//        } else {
+//            return userRepository.findByUsername(username).orElse(null);
+//        }
+    }
 
-        if (username.compareTo("ADMIN") == 0) {
-            return userRepository.findByUsername(username).orElse(null);
-        } else {
-            return userRepository.findByUsername(username).orElse(null);
-        }
+    public Object getUserById(HttpServletRequest request, Long id) {
+        return userRepository.getUserByID(id);
     }
 
     public List<UserProjection> getListUserByFamilyMember(HttpServletRequest httpServletRequest) {

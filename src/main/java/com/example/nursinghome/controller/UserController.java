@@ -24,7 +24,12 @@ public class UserController {
 
     @GetMapping("/get_user")
     public ResponseEntity<?> getUser(HttpServletRequest request) {
-        return ResponseEntity.ok(userService.getUserByID(request));
+        return ResponseEntity.ok(userService.getUser(request));
+    }
+
+    @GetMapping("/get_user_by_id")
+    public ResponseEntity<?> getUserById(HttpServletRequest request, @RequestParam("id") Long id) {
+        return ResponseEntity.ok(userService.getUserById(request, id));
     }
 
     @PostMapping("/register_for_family_member")
