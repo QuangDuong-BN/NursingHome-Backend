@@ -5,7 +5,7 @@ import com.example.nursinghome.entity.*;
 import com.example.nursinghome.entitydto.BedRecordDTO;
 import com.example.nursinghome.entitydto.ServiceRecordDTO;
 import com.example.nursinghome.enumcustom.PaymentStatus;
-import com.example.nursinghome.repository.BedRepository;
+import com.example.nursinghome.repository   .BedRepository;
 import com.example.nursinghome.repository.ServiceInfoRepository;
 import com.example.nursinghome.repository.UserRepository;
 import jakarta.persistence.Tuple;
@@ -83,6 +83,6 @@ public class ServiceRecordService {
         token = token.substring(7); // Loại bỏ "Bearer " từ token
         String username = jwtService.extractUsername(token);
         User user = userRepository.getUerByUserName(username);
-        return serviceRecordRepository.getAllByIdFamilyMemberIdFk(user);
+        return serviceRecordRepository.getAllByIdFamilyMemberIdFk(user.getId());
     }
 }

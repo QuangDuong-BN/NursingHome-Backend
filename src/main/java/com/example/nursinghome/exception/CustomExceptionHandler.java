@@ -43,6 +43,14 @@ public class CustomExceptionHandler {
         return new ErrorResponse(HttpStatus.NOT_IMPLEMENTED, ex.getMessage());
     }
 
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handlerConflictException(ConflictException ex) {
+        return new ConflictException(ex.getMessage()).getMessage();
+    }
+
+
+
 
 
 }

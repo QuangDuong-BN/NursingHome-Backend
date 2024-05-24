@@ -7,14 +7,20 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ServiceRecordRepository extends JpaRepository<ServiceRecord, Long> {
     @Query("SELECT SUM(s.price) FROM ServiceRecord s")
     Double countRevenue();
 
-    @Query(value = "SELECT sr.id,si.name, us.name,sr.booking_time,sr.production_date,sr.expiration_date,sr.price, sr.payment_status  FROM nursinghome.service_record as sr inner join user as us on sr.user_id_fk = us.id inner join service_info si on sr.service_info_id_fk = si.id order by sr.id DESC ;", nativeQuery = true)
-//    @Query("SELECT s FROM ServiceRecord s WHERE s.familyMemberIdFk = :familyMemberIdFk")
-    List<Object[]> getAllByIdFamilyMemberIdFk(@Param("familyMemberIdFk") User familyMemberIdFk);
+    @Query(value = "SELECT sr.id,si.name, us.name,sr.booking_time,sr.production_date,sr.expiration_date,sr.price, sr.payment_status  FROM nursinghome.service_record as sr inner join user as us on sr.user_id_fk = us.id inner join service_info si on sr.service_info_id_fk = si.id where sr.family_member_id_fk= :familyMemberIdFk order by sr.id DESC ;", nativeQuery = true)
+    List<Object[]> getAllByIdFamilyMemberIdFk(@Param("familyMemberIdFk") Long familyMemberIdFk);
+
+    @Query("SELECT s FROM ServiceRecord s WHERE s.userIdFk = :user AND :dateOfVisit BETWEEN s.productionDate AND s.expirationDate")
+    List<ServiceRecord> getServiceRecordByUserIdFk(@Param("user") User user, @Param("dateOfVisit") Date dateOfVisit);
+
+
 }
