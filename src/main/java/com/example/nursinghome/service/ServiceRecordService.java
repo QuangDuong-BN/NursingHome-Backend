@@ -8,6 +8,7 @@ import com.example.nursinghome.enumcustom.PaymentStatus;
 import com.example.nursinghome.repository   .BedRepository;
 import com.example.nursinghome.repository.ServiceInfoRepository;
 import com.example.nursinghome.repository.UserRepository;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Tuple;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import com.example.nursinghome.repository.ServiceRecordRepository;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -84,5 +86,27 @@ public class ServiceRecordService {
         String username = jwtService.extractUsername(token);
         User user = userRepository.getUerByUserName(username);
         return serviceRecordRepository.getAllByIdFamilyMemberIdFk(user.getId());
+    }
+
+    public Object getServiceRecordById(HttpServletRequest httpServletRequest, Long id) {
+        return serviceRecordRepository.getServiceById(id);
+    }
+
+    public String deleteEntityById(HttpServletRequest httpServletRequest,Long id) {
+        // Kiểm tra xem đối tượng cần xóa có tồn tại hay không
+        Optional<ServiceRecord> entity = serviceRecordRepository.findById(id);
+        if (entity.isPresent()) {
+            // Thực hiện xóa đối tượng
+            serviceRecordRepository.deleteById(id);
+
+            // Kiểm tra xem đối tượng còn tồn tại sau khi xóa hay không
+            entity = serviceRecordRepository.findById(id);
+            if (!entity.isPresent()) {
+                // Nếu đối tượng không còn tồn tại, trả về true
+                return "success";
+            }
+        }
+        // Nếu đối tượng không tồn tại hoặc xóa không thành công, trả về false
+        return "fail";
     }
 }

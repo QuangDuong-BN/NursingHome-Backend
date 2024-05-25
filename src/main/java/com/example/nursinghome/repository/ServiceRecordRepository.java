@@ -2,7 +2,9 @@ package com.example.nursinghome.repository;
 
 import com.example.nursinghome.entity.ServiceRecord;
 import com.example.nursinghome.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -22,5 +24,11 @@ public interface ServiceRecordRepository extends JpaRepository<ServiceRecord, Lo
     @Query("SELECT s FROM ServiceRecord s WHERE s.userIdFk = :user AND :dateOfVisit BETWEEN s.productionDate AND s.expirationDate")
     List<ServiceRecord> getServiceRecordByUserIdFk(@Param("user") User user, @Param("dateOfVisit") Date dateOfVisit);
 
+    @Query("SELECT s FROM ServiceRecord s WHERE s.id = :id")
+    Object getServiceById(Long id);
 
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM ServiceRecord s WHERE s.id = :id")
+    void deleteServiceRecordById(@Param("id") Long id);
 }

@@ -69,7 +69,7 @@ public class VisitRecordService {
             throw new ConflictException("Không thể đặt thời gian thăm trong quá khứ!");
         }
         if(serviceRecordRepository.getServiceRecordByUserIdFk(visited.get(),visitRecordDTO.getVisitDate()).isEmpty()){
-            throw new ConflictException("Người thân của bạn không có sử dụng vụ dịch chăm sóc ngày: "+visitRecordDTO.getVisitDate()+" .Hãy đăng kí dịch ngay!");
+            throw new ConflictException("Người thân của bạn không có sử dụng vụ dịch chăm sóc ngày: "+visitRecordDTO.getVisitDate()+" .Hãy đăng kí dịch vụ!");
         }
         if(actionRepository.findActionByAndDateOfActionAndAndTimeOfDay(visitRecordDTO.getVisitDate(),visitRecordDTO.getTimeOfDay()).isPresent() &&
                 !actionRepository.findActionByAndDateOfActionAndAndTimeOfDay(visitRecordDTO.getVisitDate(),visitRecordDTO.getTimeOfDay()).get().getIsVisitable() ){

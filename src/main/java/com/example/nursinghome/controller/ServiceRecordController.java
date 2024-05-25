@@ -22,4 +22,14 @@ public class ServiceRecordController {
     public ResponseEntity<?> getAllServiceRecordByResidentId(HttpServletRequest httpServletRequest) {
         return ResponseEntity.ok(serviceRecordService.getListServiceRecord(httpServletRequest));
     }
+
+    @GetMapping("/get_by_id")
+    public ResponseEntity<?> getServiceRecordById(HttpServletRequest httpServletRequest, @RequestParam Long id) {
+        return ResponseEntity.ok(serviceRecordService.getServiceRecordById(httpServletRequest, id));
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteServiceRecord(HttpServletRequest httpServletRequest, @RequestParam Long id) {
+        return ResponseEntity.ok(serviceRecordService.deleteEntityById(httpServletRequest, id));
+    }
 }
