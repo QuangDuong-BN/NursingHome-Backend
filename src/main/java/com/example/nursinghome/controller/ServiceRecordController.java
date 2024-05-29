@@ -32,4 +32,8 @@ public class ServiceRecordController {
     public ResponseEntity<?> deleteServiceRecord(HttpServletRequest httpServletRequest, @RequestParam Long id) {
         return ResponseEntity.ok(serviceRecordService.deleteEntityById(httpServletRequest, id));
     }
+    @GetMapping("/update_record_status")
+    public ResponseEntity<?> updateRecordStatus(HttpServletRequest httpServletRequest, @RequestParam Long id) {
+        return ResponseEntity.ok(serviceRecordService.updateServiceRecordById(httpServletRequest, id));
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.nursinghome.entity;
 
 import com.example.nursinghome.enumcustom.PaymentStatus;
+import com.example.nursinghome.enumcustom.RecordStatus;
 import com.example.nursinghome.enumcustom.RoomType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -50,6 +51,10 @@ public class ServiceRecord {
     @Enumerated(EnumType.STRING)
     @Column(name = "payment_status", nullable = false, columnDefinition = "ENUM('PAID', 'UNPAID')")
     private PaymentStatus paymentStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "record_status", nullable = false, columnDefinition = "ENUM('ACTIVE', 'CANCELLED') DEFAULT 'ACTIVE'")
+    private RecordStatus recordStatus;
 
     @Column(name = "booking_time", nullable = false)
     private Timestamp bookingTime;

@@ -5,6 +5,7 @@ import com.example.nursinghome.entity.*;
 import com.example.nursinghome.entitydto.BedRecordDTO;
 import com.example.nursinghome.entitydto.ServiceRecordDTO;
 import com.example.nursinghome.enumcustom.PaymentStatus;
+import com.example.nursinghome.enumcustom.RecordStatus;
 import com.example.nursinghome.repository   .BedRepository;
 import com.example.nursinghome.repository.ServiceInfoRepository;
 import com.example.nursinghome.repository.UserRepository;
@@ -75,6 +76,7 @@ public class ServiceRecordService {
                 .bookingTime(new Timestamp(System.currentTimeMillis()))
                 .roomType(serviceRecordDTO.getRoomType())
                 .paymentTime(null)
+                .recordStatus(RecordStatus.ACTIVE)
                 .build();
 
         serviceRecordRepository.save(serviceRecord);
@@ -108,5 +110,10 @@ public class ServiceRecordService {
         }
         // Nếu đối tượng không tồn tại hoặc xóa không thành công, trả về false
         return "fail";
+    }
+
+    public String updateServiceRecordById(HttpServletRequest httpServletRequest, Long id) {
+        serviceRecordRepository.updateServiceRecordById(id);
+        return "success";
     }
 }

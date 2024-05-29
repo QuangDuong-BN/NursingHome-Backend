@@ -18,14 +18,19 @@ public interface ServiceRecordRepository extends JpaRepository<ServiceRecord, Lo
     @Query("SELECT SUM(s.price) FROM ServiceRecord s")
     Double countRevenue();
 
-    @Query(value = "SELECT sr.id,si.name, us.name,sr.booking_time,sr.production_date,sr.expiration_date,sr.price, sr.payment_status  FROM nursinghome.service_record as sr inner join user as us on sr.user_id_fk = us.id inner join service_info si on sr.service_info_id_fk = si.id where sr.family_member_id_fk= :familyMemberIdFk order by sr.id DESC ;", nativeQuery = true)
+    @Query(value = "SELECT sr.id,si.name, us.name,sr.booking_time,sr.production_date,sr.expiration_date,sr.price, sr.payment_status  FROM nursinghome.service_record as sr inner join user as us on sr.user_id_fk = us.id inner join service_info si on sr.service_info_id_fk = si.id where sr.family_member_id_fk= :familyMemberIdFk and sr.record_status ='ACTIVE' order by sr.id DESC ;", nativeQuery = true)
     List<Object[]> getAllByIdFamilyMemberIdFk(@Param("familyMemberIdFk") Long familyMemberIdFk);
 
     @Query("SELECT s FROM ServiceRecord s WHERE s.userIdFk = :user AND :dateOfVisit BETWEEN s.productionDate AND s.expirationDate")
     List<ServiceRecord> getServiceRecordByUserIdFk(@Param("user") User user, @Param("dateOfVisit") Date dateOfVisit);
 
-    @Query("SELECT s FROM ServiceRecord s WHERE s.id = :id")
+    @Query("SELECT s.id, s.serviceInfoIdFk.name, s.userIdFk.name, s.productionDate,s.expirationDate,s.bedIdFk.name,s.bedIdFk.roomIdFk.name,s.bedIdFk.roomIdFk.description,s.price,s.paymentStatus FROM ServiceRecord s WHERE s.id = :id")
     Object getServiceById(Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE ServiceRecord s SET s.recordStatus = 'CANCELLED' WHERE s.id = :id")
+    void updateServiceRecordById(Long id);
 
     @Modifying
     @Transactional
