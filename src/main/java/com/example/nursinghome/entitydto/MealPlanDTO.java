@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @AllArgsConstructor
@@ -16,6 +17,6 @@ public class MealPlanDTO {
     private String breakfast;
     private String lunch;
     private String dinner;
-    private Timestamp date;
+    private Date date;
     private String note;
 }

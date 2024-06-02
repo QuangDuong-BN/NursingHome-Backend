@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class MealPlan {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id_fk", nullable = false)
+    @JoinColumn(name = "user_id_fk")
     private User user;
 
     @ManyToOne
@@ -38,8 +39,8 @@ public class MealPlan {
     @Column(name = "dinner", columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String dinner;
 
-    @Column(name = "date", columnDefinition = "DATETIME")
-    private Timestamp date;
+    @Column(name = "date")
+    private Date date;
 
     @Column(name = "note", columnDefinition = "LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String note;

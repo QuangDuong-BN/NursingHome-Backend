@@ -4,13 +4,11 @@ import com.example.nursinghome.entity.User;
 import com.example.nursinghome.enumcustom.RoleUser;
 import com.example.nursinghome.projectioninterface.UserProjection;
 import jakarta.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +17,15 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     // tim kiem user theo email
     Optional<User> findByEmail(String email);
+
     @Query("SELECT u FROM User u WHERE u.username = :username")
     Optional<User> findByUsername(String username);
 
+    @Query("SELECT u FROM User u WHERE u.id = :id")
+    User findByID(@Param("id") Long id);
+
     @Query("SELECT u.name,u.dateOfBirth,u.address,u.gender FROM User u WHERE u.id = :id")
-    Object getUserByID(@Param("id") Long id);
+    Object getNameDateAddressGenderByID(@Param("id") Long id);
 
 
     @Query("SELECT COUNT(u) FROM User u WHERE u.email = :email")
@@ -36,16 +38,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // admin repository
     @Transactional
     @Modifying
-    //deleteMarketById
-    void deleteUserById (Integer id);
+    void deleteUserById(Integer id);
 
     @Query("SELECT u FROM User u")
-    Iterable<User> findAllUser ();
+    Iterable<User> findAllUser();
 
     @Transactional
     @Modifying
     @Query("UPDATE User u SET u.name = :name, u.email = :email, u.username = :username WHERE u.id = :id")
-    void updateById( @Param("id") Integer id, @Param("name") String name, @Param("email") String email, @Param("username") String username);
+    void updateById(@Param("id") Integer id, @Param("name") String name, @Param("email") String email, @Param("username") String username);
 
     @Query("SELECT COUNT(u) FROM User u WHERE u.role = :roleStaff")
     Integer countAllByRole(RoleUser roleStaff);
@@ -55,6 +56,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u.id AS id, u.name AS name, u.address AS address, u.gender AS gender, u.imageUrl AS imageUrl FROM User u WHERE u.familyMember = :familyMember")
     List<UserProjection> getAllUserByFamilyMember(User familyMember);
+
     @Query("SELECT u FROM User u WHERE u.id = :id")
     User getUserById(Long id);
 }

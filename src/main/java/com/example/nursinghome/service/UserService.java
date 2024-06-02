@@ -119,7 +119,7 @@ public class UserService {
     }
 
     public Object getUserById(HttpServletRequest request, Long id) {
-        return userRepository.getUserByID(id);
+        return userRepository.getNameDateAddressGenderByID(id);
     }
 
     public List<UserProjection> getListUserByFamilyMember(HttpServletRequest httpServletRequest) {

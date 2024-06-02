@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -20,8 +21,14 @@ public interface MealPlanRepository extends JpaRepository<MealPlan, Long> {
 
     // TODO: Add method to find all meal plans by date
     @Query("SELECT m FROM MealPlan m WHERE DATE(m.date) = DATE(:date)")
-    List<MealPlan> findAllByDate(@Param("date") Timestamp date);
+    Object[] findAllByDate(@Param("date") Date date);
 
     @Query("SELECT m FROM MealPlan m WHERE m.user = ?1 AND DATE(m.date) = DATE(?2)")
     List<MealPlan> findAllByUserAndDate(User user, Timestamp date);
+
+    @Query("SELECT COUNT(m) FROM MealPlan m WHERE DATE(m.date) = DATE(:date)")
+    Long countByDate(@Param("date") Date date);
+
+
+
 }
