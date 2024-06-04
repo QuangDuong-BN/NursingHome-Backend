@@ -1,6 +1,7 @@
 package com.example.nursinghome.controller;
 
 import com.example.nursinghome.auth.RegisterRequest;
+import com.example.nursinghome.entity.User;
 import com.example.nursinghome.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +47,16 @@ public class UserController {
     @PostMapping("/upload_image_for_user")
     public ResponseEntity<?> uploadImageForUser(HttpServletRequest httpServletRequest, @RequestParam("id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
         return ResponseEntity.ok(userService.uploadImageForUser(httpServletRequest, id, file));
+    }
+
+    @PostMapping("/update_user")
+    public ResponseEntity<?> updateUser(HttpServletRequest httpServletRequest, @RequestBody User user) {
+        return ResponseEntity.ok(userService.updateUser(httpServletRequest, user));
+    }
+
+    @DeleteMapping("/delete_user/{id}" )
+    public ResponseEntity<?> deleteUser(HttpServletRequest httpServletRequest, @PathVariable("id") Long id) {
+        userService.deleteUser(httpServletRequest, id);
+        return ResponseEntity.ok("Delete user successfully");
     }
 }

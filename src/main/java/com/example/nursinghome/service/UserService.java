@@ -130,7 +130,7 @@ public class UserService {
         return userRepository.getAllUserByFamilyMember(familyMember);
     }
 
-    public User updateUser(User user) {
+    public User updateUser(HttpServletRequest httpServletRequest,User user) {
         User existingUser = userRepository.findById(user.getId())
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + user.getId()));
 
@@ -145,7 +145,7 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteUser(HttpServletRequest httpServletRequest,Long id) {
         userRepository.deleteById(id);
     }
 
