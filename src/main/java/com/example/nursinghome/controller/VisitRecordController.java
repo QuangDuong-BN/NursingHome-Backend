@@ -12,6 +12,7 @@ import java.sql.Date;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/visitRecord")
 public class VisitRecordController {
     private final VisitRecordService visitHistoryService;

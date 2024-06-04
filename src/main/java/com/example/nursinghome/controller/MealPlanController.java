@@ -2,6 +2,7 @@ package com.example.nursinghome.controller;
 
 import com.example.nursinghome.entity.User;
 import com.example.nursinghome.entitydto.MealPlanDTO;
+import com.example.nursinghome.repository.MealPlanRepository;
 import com.example.nursinghome.service.MealPlanService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.sql.Date;
 @RequestMapping("meal_plan")
 public class MealPlanController {
     private final MealPlanService mealPlanService;
+    private final MealPlanRepository mealPlanRepository;
 
     @GetMapping("/get_all_by_user")
     public ResponseEntity<?> getAllByUser(HttpServletRequest request, @RequestParam("id") Long userId) {
@@ -29,6 +31,17 @@ public class MealPlanController {
         return ResponseEntity.ok(mealPlanService.getMealPlanByDate(request, date));
     }
 
+    @GetMapping("/get_all")
+    public ResponseEntity<?> getAll(HttpServletRequest request) {
+        return ResponseEntity.ok(mealPlanRepository.findAllTop15ByDateDESC());
+    }
+
+    @GetMapping("/get_by_id")
+    public ResponseEntity<?> getByID(HttpServletRequest request, @RequestParam("id") Long id) {
+        return ResponseEntity.ok(mealPlanRepository.findById(id));
+    }
+
+
     @PostMapping("/add_by_user")
     public ResponseEntity<?> addByUser(HttpServletRequest request, @RequestBody MealPlanDTO mealPlanDTO) {
         return ResponseEntity.ok(mealPlanService.addMealPlan(request, mealPlanDTO)) ;
@@ -37,4 +50,10 @@ public class MealPlanController {
     public ResponseEntity<?> deleteMealPlan(HttpServletRequest request, @RequestParam("id") Long id) {
         return ResponseEntity.ok(mealPlanService.deleteMealPlan(request, id));
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateMealPlan(HttpServletRequest request, @RequestBody MealPlanDTO mealPlanDTO) {
+        return ResponseEntity.ok(mealPlanService.updateMealPlan(mealPlanDTO));
+    }
+
 }

@@ -12,6 +12,7 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;

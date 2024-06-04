@@ -15,6 +15,12 @@ import java.util.Optional;
 @Repository
 public interface ActionRepository extends JpaRepository<Action, Long> {
 
+    @Query("SELECT a FROM Action a WHERE a.dateOfAction = :dateOfAction ORDER BY a.timeOfDay ASC ")
+    List<Object[]> findByDateOfAction(@Param("dateOfAction")Date dateOfAction);
+
+    @Query("SELECT a FROM Action a  ORDER BY a.dateOfAction DESC , a.timeOfDay ASC ")
+    List<Object[]> getListAction();
+
     @Query("SELECT a.name,a.description, a.dateOfAction, a.timeOfDay, a.isVisitable FROM Action a WHERE a.dateOfAction = :dateOfAction ORDER BY a.timeOfDay ASC ")
     List<Object[]> getAction(@Param("dateOfAction")Date dateOfAction);
 

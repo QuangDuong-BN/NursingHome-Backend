@@ -4,17 +4,19 @@ import com.example.nursinghome.entity.Feedback;
 import com.example.nursinghome.entitydto.FeedBackDTO;
 import com.example.nursinghome.service.FeedbackService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/feedback")
 
 public class FeedbackController {
 
     private final FeedbackService feedbackService;
+
     @GetMapping
     public List<Feedback> getAllFeedback() {
         return feedbackService.getAllFeedback();

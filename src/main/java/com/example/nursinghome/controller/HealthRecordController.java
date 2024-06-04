@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.nursinghome.service.HealthRecordService;
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("health_record_info")
 public class HealthRecordController {
     private final HealthRecordService healthRecordService;

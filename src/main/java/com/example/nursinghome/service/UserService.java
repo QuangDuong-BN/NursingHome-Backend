@@ -98,12 +98,7 @@ public class UserService {
         String token = request.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
         String username = jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
-
-        System.out.println(username);
-        if (username.compareTo("ADMIN") == 0) {
-            return userRepository.findAll();
-        }
-        throw new RoleException("You don't have permission an admin");
+        return userRepository.findAllUserAndFamilyUser();
     }
 
     public User getUser(HttpServletRequest request) {
@@ -111,12 +106,17 @@ public class UserService {
         token = token.substring(7); // Loại bỏ "Bearer " từ token
         String username = jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
         return userRepository.findByUsername(username).orElse(null);
-//        if (username.compareTo("ADMIN") == 0) {
-//            return userRepository.findByUsername(username).orElse(null);
-//        } else {
-//            return userRepository.findByUsername(username).orElse(null);
-//        }
+
     }
+
+    public List<User> findAllByIDOrName(HttpServletRequest request, Long id, String name) {
+        String token = request.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
+        token = token.substring(7); // Loại bỏ "Bearer " từ token
+        String username = jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
+        return userRepository.findAllByIDOrName(id,name);
+    }
+
+
 
     public Object getUserById(HttpServletRequest request, Long id) {
         return userRepository.getNameDateAddressGenderByID(id);
@@ -130,10 +130,23 @@ public class UserService {
         return userRepository.getAllUserByFamilyMember(familyMember);
     }
 
-    public void updateUser() {
+    public User updateUser(User user) {
+        User existingUser = userRepository.findById(user.getId())
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + user.getId()));
+
+        existingUser.setName(user.getName());
+        existingUser.setUsername(user.getUsername());
+        existingUser.setRole(user.getRole());
+        existingUser.setDateOfBirth(user.getDateOfBirth());
+        existingUser.setAddress(user.getAddress());
+        existingUser.setGender(user.getGender());
+        existingUser.setImageUrl(user.getImageUrl());
+
+        return userRepository.save(existingUser);
     }
 
-    public void deleteUser() {
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 
     public String uploadImageForUser(HttpServletRequest httpServletRequest,Long Id, MultipartFile imageFile) throws IOException {

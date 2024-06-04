@@ -19,7 +19,9 @@ public interface MealPlanRepository extends JpaRepository<MealPlan, Long> {
     @Query("SELECT h FROM MealPlan h WHERE h.user = ?1")
     List<MealPlan> findAllByUser(User user);
 
-    // TODO: Add method to find all meal plans by date
+    @Query("select m from MealPlan m ORDER BY m.date DESC LIMIT 15" )
+    List<Object[]> findAllTop15ByDateDESC();
+
     @Query("SELECT m FROM MealPlan m WHERE DATE(m.date) = DATE(:date)")
     Object[] findAllByDate(@Param("date") Date date);
 
@@ -28,6 +30,7 @@ public interface MealPlanRepository extends JpaRepository<MealPlan, Long> {
 
     @Query("SELECT COUNT(m) FROM MealPlan m WHERE DATE(m.date) = DATE(:date)")
     Long countByDate(@Param("date") Date date);
+
 
 
 

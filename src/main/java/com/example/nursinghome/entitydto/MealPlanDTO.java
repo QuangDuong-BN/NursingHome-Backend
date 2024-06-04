@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 @Data
 @Builder
 public class MealPlanDTO {
+    private Long id;
     private Long userId; // or UserDTO user; if you need more user details
     private String breakfast;
     private String lunch;

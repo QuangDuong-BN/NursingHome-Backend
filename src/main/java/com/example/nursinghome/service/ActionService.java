@@ -31,4 +31,24 @@ public class ActionService {
     public List<Object[]> getAction(HttpServletRequest httpServletRequest, Date dateOfAction) {
         return actionRepository.getAction(dateOfAction);
     }
+
+    public List<Object[]> getAllActions() {
+        return actionRepository.getListAction();
+    }
+
+    public Action getActionById(Long id) {
+        return actionRepository.findById(id).orElse(null);
+    }
+
+    public List<Object[]> getActionsByDate(Date date) {
+        return actionRepository.findByDateOfAction(date);
+    }
+
+    public Action updateAction(Action action) {
+        return actionRepository.save(action);
+    }
+
+    public void deleteAction(Long id) {
+        actionRepository.deleteById(id);
+    }
 }

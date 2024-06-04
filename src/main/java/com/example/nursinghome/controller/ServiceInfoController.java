@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/service_info")
 public class ServiceInfoController {
     private final ServiceInfoService serviceInfoService;

@@ -34,7 +34,7 @@ public class MealPlanService {
         String username = jwtService.extractUsername(token);
         User creator = userRepository.getUerByUserName(username);
         Long cout = mealPlanRepository.countByDate(mealPlanDTO.getDate());
-        if(cout > 0) {
+        if (cout > 0) {
             throw new ConflictException("Bạn đã tạo kế hoạch ăn cho ngày này rồi!");
         }
         var mealPlan = MealPlan.builder()
@@ -49,7 +49,7 @@ public class MealPlanService {
         return "success";
     }
 
-//    public List<MealPlanDTO> getAllHealthRecord() {
+    //    public List<MealPlanDTO> getAllHealthRecord() {
 //        List<MealPlanDTO> healthRecords = healthRecordRepository.findAll();
 //        return healthRecords.stream()
 //                .map(this::mapToDTO)
@@ -74,7 +74,7 @@ public class MealPlanService {
         return mealPlans;
     }
 
-    public String deleteMealPlan(HttpServletRequest httpServletRequest,Long id) {
+    public String deleteMealPlan(HttpServletRequest httpServletRequest, Long id) {
         // Kiểm tra xem đối tượng cần xóa có tồn tại hay không
         Optional<MealPlan> entity = mealPlanRepository.findById(id);
         if (entity.isPresent()) {
@@ -93,7 +93,6 @@ public class MealPlanService {
     }
 
 
-
     private MealPlanDTO mapToDTO(MealPlan mealPlan) {
         MealPlanDTO mealPlanDTO = new MealPlanDTO();
         mealPlanDTO.setUserId(mealPlan.getUser().getId());
@@ -104,6 +103,19 @@ public class MealPlanService {
         mealPlanDTO.setNote(mealPlan.getNote());
         return mealPlanDTO;
     }
+
+    public MealPlan updateMealPlan(MealPlanDTO mealPlanDTO) {
+        MealPlan mealPlan = mealPlanRepository.findById(mealPlanDTO.getId())
+                .orElseThrow(() -> new RuntimeException("MealPlan not found with id: " + mealPlanDTO.getId()));
+
+        mealPlan.setBreakfast(mealPlanDTO.getBreakfast());
+        mealPlan.setLunch(mealPlanDTO.getLunch());
+        mealPlan.setDinner(mealPlanDTO.getDinner());
+        mealPlan.setDate(mealPlanDTO.getDate());
+        mealPlan.setNote(mealPlanDTO.getNote());
+        return mealPlanRepository.save(mealPlan);
+    }
+
 
 //    private HealthRecordDTO mapToDTO(HealthRecord healthRecord) {
 //        HealthRecordDTO healthRecordDTO = new HealthRecordDTO();

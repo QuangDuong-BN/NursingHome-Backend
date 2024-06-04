@@ -3,14 +3,12 @@ package com.example.nursinghome.controller;
 import com.example.nursinghome.UploadFileCOnfig.FileUpLoadResponse;
 import com.example.nursinghome.UploadFileCOnfig.FileUploadUtil;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/uploadfile")
 public class FileUploadController {
     @PostMapping()
