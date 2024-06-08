@@ -1,12 +1,15 @@
 package com.example.nursinghome.service;
 
+import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.entity.ServiceRecord;
 import com.example.nursinghome.entity.User;
 import com.example.nursinghome.entity.UserStaffAssignment;
 import com.example.nursinghome.entitydto.UserStaffAssignmentDTO;
+import com.example.nursinghome.projectioninterface.UserProjection;
 import com.example.nursinghome.repository.ServiceRecordRepository;
 import com.example.nursinghome.repository.UserRepository;
 import com.example.nursinghome.repository.UserStaffAssignmentRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ import java.util.List;
 public class UserStaffAssignmentService {
     private final UserRepository userRepository;
     private final ServiceRecordRepository serviceRecordRepository;
+    private final JwtService jwtService;
     private final UserStaffAssignmentRepository userStaffAssignmentRepository;
 
     public List<UserStaffAssignment> getAllAssignments() {
@@ -41,5 +45,13 @@ public class UserStaffAssignmentService {
 
     public void deleteAssignment(Long id) {
         userStaffAssignmentRepository.deleteById(id);
+    }
+
+    public List<UserProjection> getListUserByDocter(HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
+        token = token.substring(7); // Loại bỏ "Bearer " từ token
+        String username = jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
+        User familyMember = userRepository.getUerByUserName(username);
+        return userStaffAssignmentRepository.getAllUserByDocter(familyMember);
     }
 }

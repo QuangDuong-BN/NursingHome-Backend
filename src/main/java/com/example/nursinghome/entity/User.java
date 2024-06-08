@@ -1,6 +1,7 @@
 package com.example.nursinghome.entity;
 
 import com.example.nursinghome.enumcustom.GenderUser;
+import com.example.nursinghome.enumcustom.RecordStatus;
 import com.example.nursinghome.enumcustom.RoleUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -61,6 +62,9 @@ public class User implements UserDetails {
     @Column(name = "image_url")
     private String imageUrl;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private RecordStatus status;
 
     @Override
     public String getPassword() {

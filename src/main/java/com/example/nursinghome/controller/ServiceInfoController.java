@@ -2,6 +2,7 @@ package com.example.nursinghome.controller;
 
 import com.example.nursinghome.entitydto.ServiceInfoRequest;
 import com.example.nursinghome.entitydto.ServiceInfoResponse;
+import com.example.nursinghome.repository.ServiceInfoRepository;
 import com.example.nursinghome.service.ServiceInfoService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/service_info")
 public class ServiceInfoController {
     private final ServiceInfoService serviceInfoService;
+    private final ServiceInfoRepository serviceInfoRepository;
     @PostMapping("/add")
     public ResponseEntity<?> addServiceInfo(HttpServletRequest request, @ModelAttribute ServiceInfoRequest serviceInfoRequest) {
         serviceInfoService.AddServiceInfo(request, serviceInfoRequest);
@@ -23,6 +25,11 @@ public class ServiceInfoController {
     @GetMapping("/get_all")
     public ResponseEntity<?> getServiceInfo1(HttpServletRequest request) {
         return ResponseEntity.ok(serviceInfoService.getAllServiceInfo());
+    }
+
+    @GetMapping("/get_all_web")
+    public ResponseEntity<?> getServiceInfo3(HttpServletRequest request) {
+        return ResponseEntity.ok(serviceInfoRepository.findAll());
     }
 
     @GetMapping("/get_all_for_list_service_info")

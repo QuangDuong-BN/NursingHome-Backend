@@ -2,8 +2,10 @@ package com.example.nursinghome.controller;
 
 import com.example.nursinghome.entity.UserStaffAssignment;
 import com.example.nursinghome.entitydto.UserStaffAssignmentDTO;
+import com.example.nursinghome.projectioninterface.UserProjection;
 import com.example.nursinghome.service.UserStaffAssignmentService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,11 @@ public class UserStaffAssignmentController {
     public List<UserStaffAssignment> getAllAssignments() {
         return service.getAllAssignments();
     }
+    @GetMapping("/get_list_user_by_docter")
+    public List<UserProjection> getListUserByDocter(HttpServletRequest httpServletRequest) {
+        return service.getListUserByDocter(httpServletRequest);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<UserStaffAssignment> getAssignmentById(@PathVariable Long id) {
