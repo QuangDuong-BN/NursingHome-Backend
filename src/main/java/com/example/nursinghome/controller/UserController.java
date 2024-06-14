@@ -2,6 +2,7 @@ package com.example.nursinghome.controller;
 
 import com.example.nursinghome.auth.RegisterRequest;
 import com.example.nursinghome.entity.User;
+import com.example.nursinghome.repository.UserRepository;
 import com.example.nursinghome.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.io.IOException;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+    private final UserRepository userRepository;
 
 
     @GetMapping("/get_all_user")
@@ -54,9 +56,14 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(httpServletRequest, user));
     }
 
-    @DeleteMapping("/delete_user/{id}" )
+    @DeleteMapping("/delete_user/{id}")
     public ResponseEntity<?> deleteUser(HttpServletRequest httpServletRequest, @PathVariable("id") Long id) {
         userService.deleteUser(httpServletRequest, id);
         return ResponseEntity.ok("Delete user successfully");
+    }
+
+    @GetMapping("/get_family_member_by_id")
+    public ResponseEntity<?> getFamilyMemberById(HttpServletRequest request, @RequestParam("id") Long id) {
+        return ResponseEntity.ok(userRepository.getFamilyUserByIdUser(id));
     }
 }

@@ -1,23 +1,21 @@
 package com.example.nursinghome.service;
 
 import com.example.nursinghome.config.JwtService;
-import com.example.nursinghome.entity.*;
-import com.example.nursinghome.entitydto.BedRecordDTO;
+import com.example.nursinghome.entity.ServiceInfo;
+import com.example.nursinghome.entity.ServiceRecord;
+import com.example.nursinghome.entity.User;
+import com.example.nursinghome.entity.UserStaffAssignment;
 import com.example.nursinghome.entitydto.ServiceRecordDTO;
 import com.example.nursinghome.enumcustom.PaymentStatus;
 import com.example.nursinghome.enumcustom.RecordStatus;
-import com.example.nursinghome.repository   .BedRepository;
-import com.example.nursinghome.repository.ServiceInfoRepository;
-import com.example.nursinghome.repository.UserRepository;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Tuple;
+import com.example.nursinghome.repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.example.nursinghome.repository.ServiceRecordRepository;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +27,8 @@ public class ServiceRecordService {
     private final BedRepository bedRepository;
     private final ServiceInfoRepository serviceInfoRepository;
     private final UserRepository userRepository;
+    private final UserStaffAssignmentRepository userStaffAssignmentRepository;
+
     public void addServiceRecord(HttpServletRequest httpServletRequest, ServiceRecordDTO serviceRecordDTO) {
         // check role
         String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
@@ -41,45 +41,73 @@ public class ServiceRecordService {
 
         // service info
         ServiceInfo serviceInfo = serviceInfoRepository.getServiceInfoById(serviceRecordDTO.getServiceInfoIdFk());
+        Double priceDay = serviceInfo.getPriceDay();
+        Double priceWeek = serviceInfo.getPriceWeek();
+        Double priceMonth = serviceInfo.getPriceMonth();
+        Double priceYear = serviceInfo.getPriceYear();
 
         // time su dung dich vu
         Timestamp productionDate = serviceRecordDTO.getProductionDate();
         Timestamp expirationDate = serviceRecordDTO.getExpirationDate();
+        LocalDate date = expirationDate.toLocalDateTime().toLocalDate();
 
+        // Đặt giờ thành 5 PM
+        LocalDateTime dateTime = date.atTime(17, 0); // 17 giờ tương ứng với 5 PM
+        // Chuyển LocalDateTime về Timestamp
+        expirationDate = Timestamp.valueOf(dateTime);
 
         // Chuyển Timestamp thành LocalDate
         LocalDate productionLocalDate = productionDate.toLocalDateTime().toLocalDate();
         LocalDate expirationLocalDate = expirationDate.toLocalDateTime().toLocalDate();
-        // tinh tiêền dịch vụ
-        long numberOfDays = Math.abs(productionLocalDate.until(expirationLocalDate).getDays());
+        // tinh tiền dịch vụ
+        long numberOfDays = Math.abs(productionLocalDate.until(expirationLocalDate).getDays()) + 1;
+
+        Double price = 0.0;
+        if (numberOfDays < 7) {
+            price = priceDay * numberOfDays;
+        } else if (numberOfDays < 30) {
+            price = priceWeek * (numberOfDays / 7);
+        } else if (numberOfDays < 365) {
+            price = priceMonth * (numberOfDays / 30);
+        } else {
+            price = priceYear * (numberOfDays / 365);
+        }
 
         // dang ki giuong benh
-        Bed bed = bedRepository.getBedByID(serviceRecordDTO.getBedIdFk());
+//        Bed bed = bedRepository.getBedByID(serviceRecordDTO.getBedIdFk());
 
-//        BedRecordDTO bedRecordDTO = BedRecordDTO.builder()
-//                .bedIdFk(bed)
-//                .userIdFk(user)
-//                .productionDate(productionDate)
-//                .expirationDate(expirationDate)
-//                .build();
-//        BedRecord BedRecord = bedRecordService.addBedRecord(httpServletRequest, bedRecordDTO);
 
         var serviceRecord = ServiceRecord.builder()
                 .userIdFk(user)
                 .familyMemberIdFk(userFamily)
                 .serviceInfoIdFk(serviceInfo)
-                .bedIdFk(bed)
-                .price(120000.0*(numberOfDays+1))
+                .price(price)
                 .productionDate(productionDate)
                 .expirationDate(expirationDate)
-                .paymentStatus(PaymentStatus.PAID)
+                .paymentStatus(PaymentStatus.UNPAID)
                 .bookingTime(new Timestamp(System.currentTimeMillis()))
                 .roomType(serviceRecordDTO.getRoomType())
                 .paymentTime(null)
                 .recordStatus(RecordStatus.ACTIVE)
                 .build();
 
-        serviceRecordRepository.save(serviceRecord);
+        ServiceRecord savedServiceRecord = serviceRecordRepository.save(serviceRecord);
+
+        User userDocter = userRepository.getUserById(6L);
+        User userNurse = userRepository.getUserById(7L);
+        UserStaffAssignment userStaffAssignment = UserStaffAssignment.builder()
+                .user(user)
+                .staff(userDocter)
+                .serviceRecord(savedServiceRecord)
+                .build();
+        userStaffAssignmentRepository.save(userStaffAssignment);
+
+        userStaffAssignment = UserStaffAssignment.builder()
+                .user(user)
+                .staff(userNurse)
+                .serviceRecord(savedServiceRecord)
+                .build();
+        userStaffAssignmentRepository.save(userStaffAssignment);
     }
 
     public List<Object[]> getListServiceRecord(HttpServletRequest httpServletRequest) {
@@ -94,7 +122,7 @@ public class ServiceRecordService {
         return serviceRecordRepository.getServiceById(id);
     }
 
-    public String deleteEntityById(HttpServletRequest httpServletRequest,Long id) {
+    public String deleteEntityById(HttpServletRequest httpServletRequest, Long id) {
         // Kiểm tra xem đối tượng cần xóa có tồn tại hay không
         Optional<ServiceRecord> entity = serviceRecordRepository.findById(id);
         if (entity.isPresent()) {

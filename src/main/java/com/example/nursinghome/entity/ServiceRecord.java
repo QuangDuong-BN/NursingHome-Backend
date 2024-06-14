@@ -36,7 +36,7 @@ public class ServiceRecord {
     private ServiceInfo serviceInfoIdFk;
 
     @OneToOne
-    @JoinColumn(name = "bed_id_fk", nullable = false)
+    @JoinColumn(name = "bed_id_fk")
     private Bed bedIdFk;
 
     @Column(name = "price", nullable = false)

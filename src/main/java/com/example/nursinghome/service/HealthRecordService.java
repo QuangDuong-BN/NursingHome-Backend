@@ -23,11 +23,11 @@ public class HealthRecordService {
     private final UserRepository userRepository;
 
 
-    public void addHealthRecord(HttpServletRequest httpServletRequest,HealthRecordDTO healthRecordDTO) {
+    public void addHealthRecord(HttpServletRequest httpServletRequest, HealthRecordDTO healthRecordDTO) {
         String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
         String username = jwtService.extractUsername(token);
-        User creator= userRepository.getUerByUserName(username);
+        User creator = userRepository.getUerByUserName(username);
 
         var healthRecord = HealthRecord.builder()
                 .weight(healthRecordDTO.getWeight())
@@ -67,12 +67,12 @@ public class HealthRecordService {
 //    }
 
 
-
-
-
     private HealthRecordDTO mapToDTO(HealthRecord healthRecord) {
         HealthRecordDTO healthRecordDTO = new HealthRecordDTO();
         healthRecordDTO.setUserId(healthRecord.getUser().getId());
+        healthRecordDTO.setAddress(healthRecord.getUser().getAddress());
+        healthRecordDTO.setName(healthRecord.getUser().getName());
+        healthRecordDTO.setImage_url(healthRecord.getUser().getImageUrl());
         healthRecordDTO.setWeight(healthRecord.getWeight());
         healthRecordDTO.setBloodPressure(healthRecord.getBloodPressure());
         healthRecordDTO.setHeartbeat(healthRecord.getHeartbeat());

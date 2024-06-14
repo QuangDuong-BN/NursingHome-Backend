@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface HealthRecordRepository extends JpaRepository<HealthRecord, Long>{
-    @Query("SELECT h FROM HealthRecord h WHERE h.user = ?1")
+    @Query("SELECT h FROM HealthRecord h WHERE h.user = ?1 ORDER BY h.date DESC LIMIT 1")
     List<HealthRecord> findAllByUser(User user);
-
 }
