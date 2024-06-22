@@ -47,8 +47,8 @@ public class MyApplicationRunner implements ApplicationRunner {
             var user = User.builder()
                     .name("ADMIN")
                     .email("admin@lotuscare.com")
-                    .username("ADMIN")
-                    .password(passwordEncoder.encode("ADMIN"))
+                    .username("admin@lotuscare.com")
+                    .password(passwordEncoder.encode("123456"))
                     .role(RoleUser.ADMIN)
                     .phone("0344381803")
                     .build();
