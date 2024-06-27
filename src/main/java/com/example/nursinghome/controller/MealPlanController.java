@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 
-@CrossOrigin(origins = "http://localhost:63344")
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("meal_plan")
 public class MealPlanController {
     private final MealPlanService mealPlanService;
@@ -44,8 +44,9 @@ public class MealPlanController {
 
     @PostMapping("/add_by_user")
     public ResponseEntity<?> addByUser(HttpServletRequest request, @RequestBody MealPlanDTO mealPlanDTO) {
-        return ResponseEntity.ok(mealPlanService.addMealPlan(request, mealPlanDTO)) ;
+        return ResponseEntity.ok(mealPlanService.addMealPlan(request, mealPlanDTO));
     }
+
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteMealPlan(HttpServletRequest request, @RequestParam("id") Long id) {
         return ResponseEntity.ok(mealPlanService.deleteMealPlan(request, id));
