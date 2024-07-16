@@ -23,8 +23,6 @@ public interface ServiceRecordRepository extends JpaRepository<ServiceRecord, Lo
     @Query("SELECT s FROM ServiceRecord s WHERE s.userIdFk = :user AND :dateOfVisit BETWEEN s.productionDate AND s.expirationDate")
     List<ServiceRecord> getServiceRecordByUserIdFk(@Param("user") User user, @Param("dateOfVisit") Date dateOfVisit);
 
-//    @Query("SELECT s.id, s.serviceInfoIdFk.name, s.userIdFk.name, s.productionDate,s.expirationDate,s.bedIdFk.name,s.bedIdFk.roomIdFk.name,s.bedIdFk.roomIdFk.description,s.price,s.paymentStatus FROM ServiceRecord s WHERE s.id = :id")
-//    Object[] getServiceById(@Param("id") Long id);
     @Query("SELECT s.id, s.serviceInfoIdFk.name, s.userIdFk.name, s.productionDate,s.expirationDate,'null','null','null',s.price,s.paymentStatus FROM ServiceRecord s WHERE s.id = :id")
     Object getServiceById(@Param("id") Long id);
 
