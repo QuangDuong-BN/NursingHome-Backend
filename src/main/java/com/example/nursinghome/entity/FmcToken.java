@@ -23,5 +23,4 @@ public class FmcToken {
 
     @Column(name = "pmc_token")
     private String pmcToken;
-
 }

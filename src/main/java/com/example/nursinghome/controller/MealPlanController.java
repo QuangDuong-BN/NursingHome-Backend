@@ -41,7 +41,6 @@ public class MealPlanController {
         return ResponseEntity.ok(mealPlanRepository.findById(id));
     }
 
-
     @PostMapping("/add_by_user")
     public ResponseEntity<?> addByUser(HttpServletRequest request, @RequestBody MealPlanDTO mealPlanDTO) {
         return ResponseEntity.ok(mealPlanService.addMealPlan(request, mealPlanDTO));

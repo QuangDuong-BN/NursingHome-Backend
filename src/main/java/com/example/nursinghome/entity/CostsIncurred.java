@@ -1,13 +1,12 @@
 package com.example.nursinghome.entity;
 
-import java.sql.Timestamp;
-
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,5 +39,4 @@ public class CostsIncurred {
 
     @Column(name = "note", columnDefinition = "TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String note;
-
 }

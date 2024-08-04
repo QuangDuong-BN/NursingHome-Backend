@@ -51,6 +51,4 @@ public class HealthRecord {
     // ghi chu
     @Column(name = "note", columnDefinition = "LONGTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String note;
-
-    // Getters and setters
 }
