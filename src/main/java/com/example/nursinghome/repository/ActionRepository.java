@@ -1,7 +1,6 @@
 package com.example.nursinghome.repository;
 
 import com.example.nursinghome.entity.Action;
-import com.example.nursinghome.entitydto.ActionDTO;
 import com.example.nursinghome.enumcustom.TimeOfDay;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
