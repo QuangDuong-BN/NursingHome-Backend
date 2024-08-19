@@ -41,7 +41,7 @@ public class MyApplicationRunner implements ApplicationRunner {
 
         System.out.println("=================");
 
-        Optional<User> numberOfAdmin = userRepository.findByUsername("ADMIN");
+        Optional<User> numberOfAdmin = userRepository.findByUsername("admin@lotuscare.com");
         if (numberOfAdmin.isEmpty()) {
             var user = User.builder()
                     .name("ADMIN")
