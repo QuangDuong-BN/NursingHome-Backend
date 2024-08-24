@@ -33,7 +33,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.name,u.dateOfBirth,u.address,u.gender FROM User u WHERE u.id = :id")
     Object getNameDateAddressGenderByID(@Param("id") Long id);
 
-
     @Query("SELECT COUNT(u) FROM User u WHERE u.email = :email")
     Long countByEmail(@Param("email") String email);
 
@@ -43,7 +42,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // admin repository
     @Transactional
     @Modifying
-    void deleteUserById(Integer id);
+    void deleteUserById(Long id);
 
     @Query("SELECT u FROM User u")
     Iterable<User> findAllUser();
