@@ -8,6 +8,5 @@ public class NursingHomeApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(NursingHomeApplication.class, args);
-
     }
 }

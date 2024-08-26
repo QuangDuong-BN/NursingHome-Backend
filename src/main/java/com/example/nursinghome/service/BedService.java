@@ -6,7 +6,7 @@ import com.example.nursinghome.entity.Room;
 import com.example.nursinghome.entitydto.BedDTO;
 import com.example.nursinghome.enumcustom.RoomType;
 import com.example.nursinghome.exception.NotImplementedException;
-import com.example.nursinghome.projectioninterface.BedProjectioln;
+import com.example.nursinghome.projectioninterface.BedProjection;
 import com.example.nursinghome.repository.BedRepository;
 import com.example.nursinghome.repository.RoomRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,7 +53,7 @@ public class BedService {
         }
     }
 
-    public List<BedProjectioln> getListBedByRoomId(HttpServletRequest httpServletRequest, Long roomIdFk) {
+    public List<BedProjection> getListBedByRoomId(HttpServletRequest httpServletRequest, Long roomIdFk) {
         String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
         String username = jwtService.extractUsername(token);

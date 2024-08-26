@@ -1,6 +1,6 @@
 package com.example.nursinghome.projectioninterface;
 
-public interface BedProjectioln {
+public interface BedProjection {
     Long getId();
     String getName();
 }

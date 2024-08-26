@@ -4,9 +4,8 @@ import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.entity.User;
 import com.example.nursinghome.enumcustom.RoleUser;
 import com.example.nursinghome.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
@@ -18,28 +17,19 @@ import java.util.Optional;
 
 @Component
 @Configuration
+@AllArgsConstructor
+@Slf4j
 public class MyApplicationRunner implements ApplicationRunner {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    private static final Logger logger = LoggerFactory.getLogger(MyApplicationRunner.class);
-
+    final private UserRepository userRepository;
+    final private PasswordEncoder passwordEncoder;
+    final private JwtService jwtService;
+    final private AuthenticationManager authenticationManager;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        System.out.println("Công việc đã được thực hiện khi ứng dụng khởi động:");
-        System.out.println("- Check và tạo admin nếu chưa được tạo.");
-        logger.info("Công việc đã được thực hiện khi ứng dụng khởi động:");
-        logger.info("- Check và tạo admin nếu chưa được tạo.");
-        System.out.println("=================");
 
-        System.out.println("=================");
+        log.info("Công việc đã được thực hiện khi ứng dụng khởi động: Check và tạo admin nếu chưa được tạo.");
 
         Optional<User> numberOfAdmin = userRepository.findByUsername("admin@lotuscare.com");
         if (numberOfAdmin.isEmpty()) {
@@ -53,6 +43,5 @@ public class MyApplicationRunner implements ApplicationRunner {
                     .build();
             userRepository.save(user);
         }
-
     }
 }
