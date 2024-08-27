@@ -4,6 +4,7 @@ import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.entity.User;
 import com.example.nursinghome.enumcustom.RoleUser;
 import com.example.nursinghome.repository.UserRepository;
+import com.example.nursinghome.repository.httpclient.MailClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -25,6 +26,7 @@ public class MyApplicationRunner implements ApplicationRunner {
     final private PasswordEncoder passwordEncoder;
     final private JwtService jwtService;
     final private AuthenticationManager authenticationManager;
+    final private MailClient mailClient;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

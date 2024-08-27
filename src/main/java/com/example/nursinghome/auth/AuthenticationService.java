@@ -6,7 +6,9 @@ import com.example.nursinghome.enumcustom.RoleUser;
 import com.example.nursinghome.exception.EmailAlreadyExistException;
 import com.example.nursinghome.exception.RoleException;
 import com.example.nursinghome.repository.UserRepository;
+import com.example.nursinghome.repository.httpclient.MailClient;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -21,6 +24,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final MailClient mailClient;
 
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.countByEmail(request.getEmail()) > 0 ||
@@ -43,6 +47,8 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+        log.info("- Gui mail");
+        mailClient.sendEmail();
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .id(null)
@@ -53,6 +59,7 @@ public class AuthenticationService {
                 .phone(user.getPhone())
                 .role(user.getRole())
                 .build();
+
     }
 
 
