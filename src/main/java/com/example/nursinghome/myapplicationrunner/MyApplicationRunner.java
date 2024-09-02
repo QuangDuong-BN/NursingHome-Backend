@@ -24,9 +24,6 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     final private UserRepository userRepository;
     final private PasswordEncoder passwordEncoder;
-    final private JwtService jwtService;
-    final private AuthenticationManager authenticationManager;
-    final private MailClient mailClient;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

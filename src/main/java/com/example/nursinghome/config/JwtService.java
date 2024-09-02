@@ -17,7 +17,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "ZsDMY/QPbSUvadelYQCycF62BcgDcJoyqBfwTFL7EPQTqWSvOOvXPu8Gt0C3rFoJ";
+    private static final String JWT_SECRET_KEY = "ZsDMY/QPbSUvadelYQCycF62BcgDcJoyqBfwTFL7EPQTqWSvOOvXPu8Gt0C3rFoJ";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -41,14 +41,13 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis()+1000*60*24*365)) //make expriation for 365 day
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 365)) //make expriation for 365 day
                 .signWith(getSignInkey(), SignatureAlgorithm.HS256)
                 .compact();
-
     }
 
-    public boolean isTokenValid(String token,UserDetails userDetails){
-        final String username= extractUsername(token);
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 
     }
@@ -58,7 +57,7 @@ public class JwtService {
     }
 
     private Date extractExpriration(String token) {
-        return extractClaim(token,Claims::getExpiration);
+        return extractClaim(token, Claims::getExpiration);
     }
 
 
@@ -72,7 +71,7 @@ public class JwtService {
     }
 
     private Key getSignInkey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        byte[] keyBytes = Decoders.BASE64.decode(JWT_SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

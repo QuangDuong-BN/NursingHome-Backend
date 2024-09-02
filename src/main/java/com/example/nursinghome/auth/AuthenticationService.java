@@ -1,7 +1,7 @@
 package com.example.nursinghome.auth;
 
-import com.example.nursinghome.entity.User;
 import com.example.nursinghome.config.JwtService;
+import com.example.nursinghome.entity.User;
 import com.example.nursinghome.enumcustom.RoleUser;
 import com.example.nursinghome.exception.EmailAlreadyExistException;
 import com.example.nursinghome.exception.RoleException;
@@ -28,13 +28,13 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         if (userRepository.countByEmail(request.getEmail()) > 0 ||
-                userRepository.countByUsername(request.getUsername()) >0) {
+                userRepository.countByUsername(request.getUsername()) > 0) {
             throw new EmailAlreadyExistException("Email or username already exists");
         }
         // xac dinh role
         RoleUser role;
-        if (Objects.equals(request.getRole(), "ADMIN")){
-            throw  new RoleException("You don't have permission to register as an admin");
+        if (Objects.equals(request.getRole(), "ADMIN")) {
+            throw new RoleException("You don't have permission to register as an admin");
         }
 
         var user = User.builder()
@@ -47,8 +47,11 @@ public class AuthenticationService {
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
+
+        // send mail to user after register successfully
         log.info("- Gui mail");
         mailClient.sendEmail();
+
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .id(null)
@@ -62,10 +65,9 @@ public class AuthenticationService {
 
     }
 
-
-
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(      //this authentication manager take an object of type username and password authentication token
+        //this authentication manager take an object of type username and password authentication token
+        authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
                         request.getPassword()
@@ -88,21 +90,18 @@ public class AuthenticationService {
                 .imageUrl(user.getImageUrl())
                 .build();
         return authenticationResponse;
-//        return AuthenticationResponse.builder()
-//                .token(jwtToken)
-//                .build();
     }
 
 
     public AuthenticationResponse registerForFamilyMember(RegisterRequest request) {
         if (userRepository.countByEmail(request.getEmail()) > 0 ||
-                userRepository.countByUsername(request.getUsername()) >0) {
+                userRepository.countByUsername(request.getUsername()) > 0) {
             throw new EmailAlreadyExistException("Email or username already exists");
         }
         // xac dinh role
         RoleUser role = request.getRole();
-        if (RoleUser.ADMIN != role && RoleUser.FAMILY_MEMBER != role){
-            throw  new RoleException("You don't have permission to register as an ADMIN or FAMILY_MEMBER");
+        if (RoleUser.ADMIN != role && RoleUser.FAMILY_MEMBER != role) {
+            throw new RoleException("You don't have permission to register as an ADMIN or FAMILY_MEMBER");
         }
 
         var user = User.builder()
