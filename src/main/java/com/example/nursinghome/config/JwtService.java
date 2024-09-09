@@ -1,5 +1,6 @@
 package com.example.nursinghome.config;
 
+import com.example.nursinghome.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,6 +13,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 @Service
@@ -28,21 +30,23 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("scope", buildScope(user));
+        return generateToken(claims, user);
     }
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            UserDetails userDetails
+            User user
     ) {
         return Jwts
                 .builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 365)) //make expriation for 365 day
                 .signWith(getSignInkey(), SignatureAlgorithm.HS256)
+                .setClaims(extraClaims)
                 .compact();
     }
 
@@ -73,5 +77,13 @@ public class JwtService {
     private Key getSignInkey() {
         byte[] keyBytes = Decoders.BASE64.decode(JWT_SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    private String buildScope(User user) {
+        StringBuilder scope = new StringBuilder();
+        if (!Objects.isNull(user.getRole())) {
+            scope.append(user.getRole().name());
+        }
+        return scope.toString();
     }
 }

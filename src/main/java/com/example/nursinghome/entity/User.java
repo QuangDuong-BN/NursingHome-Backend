@@ -9,10 +9,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.util.Collection;
+import java.util.HashSet;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -77,7 +79,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        HashSet<GrantedAuthority> roles = new HashSet<>();
+        roles.add(new SimpleGrantedAuthority(role.name()));
+        return roles;
     }
 
     @Override

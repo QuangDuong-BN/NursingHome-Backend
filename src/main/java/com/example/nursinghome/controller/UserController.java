@@ -6,7 +6,10 @@ import com.example.nursinghome.repository.UserRepository;
 import com.example.nursinghome.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,15 +17,17 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 @CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get_all_user")
     public ResponseEntity<?> getAllUser(HttpServletRequest request) {
+        log.info("da vao ben trong");
         return ResponseEntity.ok(userService.getAllUser(request));
     }
 

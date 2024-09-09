@@ -14,18 +14,20 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/room")
 public class RoomController {
     private final RoomService roomService;
+
     @PostMapping("/add")
     public ResponseEntity<?> addRoom(HttpServletRequest httpServletRequest, @RequestBody RoomDTO roomDTO) {
-        roomService.addRoom(httpServletRequest,roomDTO);
+        roomService.addRoom(httpServletRequest, roomDTO);
         return ResponseEntity.ok("success");
     }
+
     @GetMapping("/get_all")
-    public ResponseEntity<?> getAllRoom(){
+    public ResponseEntity<?> getAllRoom() {
         return ResponseEntity.ok(roomService.getListRoom());
     }
 
     @GetMapping("/get_list_name_room_by_room_type")
-    public ResponseEntity<?> getListNameRoomByRoomType(HttpServletRequest httpServletRequest, @RequestParam("roomType") RoomType roomType){
-        return ResponseEntity.ok(roomService.getListNameRoomByRoomType(httpServletRequest,roomType));
+    public ResponseEntity<?> getListNameRoomByRoomType(HttpServletRequest httpServletRequest, @RequestParam("roomType") RoomType roomType) {
+        return ResponseEntity.ok(roomService.getListNameRoomByRoomType(httpServletRequest, roomType));
     }
 }
