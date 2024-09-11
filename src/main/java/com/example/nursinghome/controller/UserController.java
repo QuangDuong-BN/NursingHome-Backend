@@ -26,9 +26,10 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get_all_user")
-    public ResponseEntity<?> getAllUser(HttpServletRequest request) {
-        log.info("da vao ben trong");
-        return ResponseEntity.ok(userService.getAllUser(request));
+    public ResponseEntity<?> getAllUser() {
+        log.info("usernname: " + SecurityContextHolder.getContext().getAuthentication().getName());
+        SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
+        return ResponseEntity.ok(userService.getAllUser());
     }
 
     @GetMapping("/get_user")
@@ -36,6 +37,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getUser(request));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get_user_by_id")
     public ResponseEntity<?> getUserById(HttpServletRequest request, @RequestParam("id") Long id) {
         return ResponseEntity.ok(userService.getUserById(request, id));
@@ -61,6 +63,7 @@ public class UserController {
         return ResponseEntity.ok(userService.updateUser(httpServletRequest, user));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete_user/{id}")
     public ResponseEntity<?> deleteUser(HttpServletRequest httpServletRequest, @PathVariable("id") Long id) {
         userService.deleteUser(httpServletRequest, id);

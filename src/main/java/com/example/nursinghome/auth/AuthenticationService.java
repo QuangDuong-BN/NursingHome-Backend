@@ -7,6 +7,7 @@ import com.example.nursinghome.exception.EmailAlreadyExistException;
 import com.example.nursinghome.exception.RoleException;
 import com.example.nursinghome.repository.UserRepository;
 import com.example.nursinghome.repository.httpclient.MailClient;
+import com.nimbusds.jose.JOSEException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -65,7 +66,7 @@ public class AuthenticationService {
 
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws JOSEException {
         //this authentication manager take an object of type username and password authentication token
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -75,7 +76,7 @@ public class AuthenticationService {
         );// if the username and password is not correct the exception is thrown
         var user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateTokenWithNumBus(user);
         AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
                 .token(jwtToken)
                 .id(null)

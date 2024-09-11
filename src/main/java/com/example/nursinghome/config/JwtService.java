@@ -1,11 +1,15 @@
 package com.example.nursinghome.config;
 
 import com.example.nursinghome.entity.User;
+import com.nimbusds.jose.*;
+import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jwt.JWTClaimsSet;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +22,25 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
+    @Value("${JWT_SECRET_KEY}")
+    private String JWT_SECRET_KEY;
 
-    private static final String JWT_SECRET_KEY = "ZsDMY/QPbSUvadelYQCycF62BcgDcJoyqBfwTFL7EPQTqWSvOOvXPu8Gt0C3rFoJ";
+    public String generateTokenWithNumBus(
+            User user) throws JOSEException {
+        JWSHeader header = new JWSHeader.Builder(JWSAlgorithm.HS256).build();
+
+        JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
+                .subject(user.getUsername())
+                .issuer("nuringhome")
+                .issueTime(new Date())
+                .expirationTime(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 365))
+                .claim("scope", buildScope(user))
+                .build();
+        Payload payload = new Payload(jwtClaimsSet.toJSONObject());
+        JWSObject jwsObject = new JWSObject(header, payload);
+        jwsObject.sign(new MACSigner(JWT_SECRET_KEY.getBytes()));
+        return jwsObject.serialize();
+    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -78,6 +99,7 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(JWT_SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
 
     private String buildScope(User user) {
         StringBuilder scope = new StringBuilder();

@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,6 +46,7 @@ public class UserService {
     @Value("${cloudinary.api-secret}")
     private String apiSecret;
 
+    @PreAuthorize("hasRole('ADMIN')")
     public AuthenticationResponse registerForFamilyMember(HttpServletRequest httpServletRequest, RegisterRequest registerRequest) throws IOException {
 
         String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
@@ -92,12 +94,13 @@ public class UserService {
         } else throw new RoleException("You don't have permission to register as an ADMIN or FAMILY_MEMBER");
     }
 
-    public List<User> getAllUser(HttpServletRequest request) {
+    public List<User> getAllUser() {
         return userRepository.findAllUserAndFamilyUser();
     }
 
     public User getUser(HttpServletRequest request) {
-        String username = jwtService.extractUsername(SecurityContextHolder.getContext().getAuthentication().getName()); // Sử dụng JwtService để lấy username từ token
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.info("username: " + username);
         return userRepository.findByUsername(username).orElse(null);
     }
 
