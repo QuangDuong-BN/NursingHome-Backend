@@ -1,9 +1,13 @@
+/* (C)2024 */
 package com.example.nursinghome.entity;
 
 import com.example.nursinghome.enumcustom.GenderUser;
 import com.example.nursinghome.enumcustom.RecordStatus;
 import com.example.nursinghome.enumcustom.RoleUser;
 import jakarta.persistence.*;
+import java.sql.Date;
+import java.util.Collection;
+import java.util.HashSet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,10 +15,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.sql.Date;
-import java.util.Collection;
-import java.util.HashSet;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,7 +31,10 @@ public class User implements UserDetails {
     @JoinColumn(name = "family_member_id_fk")
     private User familyMember; // Khóa ngoại tham chiếu đến người nhà quản lý dịch vụ người dùng
 
-    @Column(name = "name", nullable = false, columnDefinition = "VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
+    @Column(
+            name = "name",
+            nullable = false,
+            columnDefinition = "VarChar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
     private String name;
 
     @Column(name = "phone")

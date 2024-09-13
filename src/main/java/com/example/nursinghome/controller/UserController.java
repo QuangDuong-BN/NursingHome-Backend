@@ -1,3 +1,4 @@
+/* (C)2024 */
 package com.example.nursinghome.controller;
 
 import com.example.nursinghome.auth.RegisterRequest;
@@ -5,6 +6,7 @@ import com.example.nursinghome.entity.User;
 import com.example.nursinghome.repository.UserRepository;
 import com.example.nursinghome.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,7 +28,10 @@ public class UserController {
     @GetMapping("/get_all_user")
     public ResponseEntity<?> getAllUser() {
         log.info("usernname: " + SecurityContextHolder.getContext().getAuthentication().getName());
-        SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
+        SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getAuthorities()
+                .forEach(grantedAuthority -> log.info(grantedAuthority.getAuthority()));
         return ResponseEntity.ok(userService.getAllUser());
     }
 
@@ -44,7 +47,9 @@ public class UserController {
     }
 
     @PostMapping("/register_for_family_member")
-    public ResponseEntity<?> registerForFamilyMember(HttpServletRequest httpServletRequest, @RequestBody RegisterRequest request) throws IOException {
+    public ResponseEntity<?> registerForFamilyMember(
+            HttpServletRequest httpServletRequest, @RequestBody RegisterRequest request)
+            throws IOException {
         return ResponseEntity.ok(userService.registerForFamilyMember(httpServletRequest, request));
     }
 
@@ -54,24 +59,31 @@ public class UserController {
     }
 
     @PostMapping("/upload_image_for_user")
-    public ResponseEntity<?> uploadImageForUser(HttpServletRequest httpServletRequest, @RequestParam("id") Long id, @RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<?> uploadImageForUser(
+            HttpServletRequest httpServletRequest,
+            @RequestParam("id") Long id,
+            @RequestParam("file") MultipartFile file)
+            throws IOException {
         return ResponseEntity.ok(userService.uploadImageForUser(httpServletRequest, id, file));
     }
 
     @PostMapping("/update_user")
-    public ResponseEntity<?> updateUser(HttpServletRequest httpServletRequest, @RequestBody User user) {
+    public ResponseEntity<?> updateUser(
+            HttpServletRequest httpServletRequest, @RequestBody User user) {
         return ResponseEntity.ok(userService.updateUser(httpServletRequest, user));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete_user/{id}")
-    public ResponseEntity<?> deleteUser(HttpServletRequest httpServletRequest, @PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteUser(
+            HttpServletRequest httpServletRequest, @PathVariable("id") Long id) {
         userService.deleteUser(httpServletRequest, id);
         return ResponseEntity.ok("Delete user successfully");
     }
 
     @GetMapping("/get_family_member_by_id")
-    public ResponseEntity<?> getFamilyMemberById(HttpServletRequest request, @RequestParam("id") Long id) {
+    public ResponseEntity<?> getFamilyMemberById(
+            HttpServletRequest request, @RequestParam("id") Long id) {
         return ResponseEntity.ok(userRepository.getFamilyUserByIdUser(id));
     }
 }

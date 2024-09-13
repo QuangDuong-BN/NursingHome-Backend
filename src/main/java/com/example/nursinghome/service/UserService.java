@@ -1,3 +1,4 @@
+/* (C)2024 */
 package com.example.nursinghome.service;
 
 import com.cloudinary.Cloudinary;
@@ -13,6 +14,10 @@ import com.example.nursinghome.exception.RoleException;
 import com.example.nursinghome.projectioninterface.UserProjection;
 import com.example.nursinghome.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,11 +27,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 @RequiredArgsConstructor
 @Service
@@ -46,15 +46,32 @@ public class UserService {
     @Value("${cloudinary.api-secret}")
     private String apiSecret;
 
+    public static String generateRandomString(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder(length);
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+        return sb.toString();
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
-    public AuthenticationResponse registerForFamilyMember(HttpServletRequest httpServletRequest, RegisterRequest registerRequest) throws IOException {
+    public AuthenticationResponse registerForFamilyMember(
+            HttpServletRequest httpServletRequest, RegisterRequest registerRequest)
+            throws IOException {
 
-        String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
+        String token =
+                httpServletRequest.getHeader(
+                        "Authorization"); // Lấy token từ Header (thường được gửi trong header
+        // Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
-        String username = jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
+        String username =
+                jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
 
-        if (userRepository.countByEmail(registerRequest.getEmail()) > 0 ||
-                userRepository.countByUsername(registerRequest.getUsername()) > 0) {
+        if (userRepository.countByEmail(registerRequest.getEmail()) > 0
+                || userRepository.countByUsername(registerRequest.getUsername()) > 0) {
             throw new EmailAlreadyExistException("Email or username already exists");
         }
 
@@ -69,16 +86,17 @@ public class UserService {
         RoleUser role = userRepository.getUerByUserName(username).getRole();
         if (RoleUser.ADMIN == role || RoleUser.FAMILY_MEMBER == role) {
             User familyMember = userRepository.getUerByUserName(username);
-            var user = User.builder()
-                    .name(registerRequest.getName())
-                    .username(randomString)
-                    .role(RoleUser.SERVICE_USER)
-                    .dateOfBirth(registerRequest.getDateOfBirth())
-                    .address(registerRequest.getAddress())
-                    .gender(registerRequest.getGender())
-                    .imageUrl(null)
-                    .familyMember(familyMember)
-                    .build();
+            var user =
+                    User.builder()
+                            .name(registerRequest.getName())
+                            .username(randomString)
+                            .role(RoleUser.SERVICE_USER)
+                            .dateOfBirth(registerRequest.getDateOfBirth())
+                            .address(registerRequest.getAddress())
+                            .gender(registerRequest.getGender())
+                            .imageUrl(null)
+                            .familyMember(familyMember)
+                            .build();
             userRepository.save(user);
             var jwtToken = jwtService.generateToken(user);
             return AuthenticationResponse.builder()
@@ -91,7 +109,9 @@ public class UserService {
                     .gender(registerRequest.getGender())
                     .imageUrl(null)
                     .build();
-        } else throw new RoleException("You don't have permission to register as an ADMIN or FAMILY_MEMBER");
+        } else
+            throw new RoleException(
+                    "You don't have permission to register as an ADMIN or FAMILY_MEMBER");
     }
 
     public List<User> getAllUser() {
@@ -105,28 +125,40 @@ public class UserService {
     }
 
     public List<User> findAllByIDOrName(HttpServletRequest request, Long id, String name) {
-        String token = request.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
+        String token =
+                request.getHeader(
+                        "Authorization"); // Lấy token từ Header (thường được gửi trong header
+        // Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
-        String username = jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
+        String username =
+                jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
         return userRepository.findAllByIDOrName(id, name);
     }
-
 
     public Object getUserById(HttpServletRequest request, Long id) {
         return userRepository.getNameDateAddressGenderByID(id);
     }
 
     public List<UserProjection> getListUserByFamilyMember(HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
+        String token =
+                httpServletRequest.getHeader(
+                        "Authorization"); // Lấy token từ Header (thường được gửi trong header
+        // Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
-        String username = jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
+        String username =
+                jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
         User familyMember = userRepository.getUerByUserName(username);
         return userRepository.getAllUserByFamilyMember(familyMember);
     }
 
     public User updateUser(HttpServletRequest httpServletRequest, User user) {
-        User existingUser = userRepository.findById(user.getId())
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + user.getId()));
+        User existingUser =
+                userRepository
+                        .findById(user.getId())
+                        .orElseThrow(
+                                () ->
+                                        new RuntimeException(
+                                                "User not found with id: " + user.getId()));
 
         existingUser.setName(user.getName());
         existingUser.setUsername(user.getUsername());
@@ -143,10 +175,14 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public String uploadImageForUser(HttpServletRequest httpServletRequest, Long Id, MultipartFile imageFile) throws IOException {
+    public String uploadImageForUser(
+            HttpServletRequest httpServletRequest, Long Id, MultipartFile imageFile)
+            throws IOException {
         // Tạo đối tượng Cloudinary
-        Cloudinary cloudinary = new Cloudinary("cloudinary://" + apiKey + ":" + apiSecret + "@" + cloudName);
-        Map<?, ?> result = cloudinary.uploader().upload(imageFile.getBytes(), ObjectUtils.emptyMap());
+        Cloudinary cloudinary =
+                new Cloudinary("cloudinary://" + apiKey + ":" + apiSecret + "@" + cloudName);
+        Map<?, ?> result =
+                cloudinary.uploader().upload(imageFile.getBytes(), ObjectUtils.emptyMap());
         // Lấy URL của ảnh tải lên từ kết quả
         String imageUrl = (String) result.get("url");
         User user = userRepository.findById(Id).orElse(null);
@@ -156,16 +192,5 @@ public class UserService {
             return imageUrl;
         }
         throw new NotImplementedException("User not found");
-    }
-
-    public static String generateRandomString(int length) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder sb = new StringBuilder(length);
-        Random random = new Random();
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(characters.length());
-            sb.append(characters.charAt(index));
-        }
-        return sb.toString();
     }
 }
