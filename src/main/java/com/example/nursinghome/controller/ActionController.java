@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Date;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:63344")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/action")

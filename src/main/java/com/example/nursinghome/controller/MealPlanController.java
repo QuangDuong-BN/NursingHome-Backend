@@ -13,7 +13,6 @@ import java.sql.Date;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("meal_plan")
 public class MealPlanController {
     private final MealPlanService mealPlanService;

@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.nursinghome.service.BedService;
-@CrossOrigin(origins = "http://localhost:63344")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/bed")

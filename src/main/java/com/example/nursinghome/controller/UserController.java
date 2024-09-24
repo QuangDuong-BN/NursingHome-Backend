@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
-@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;

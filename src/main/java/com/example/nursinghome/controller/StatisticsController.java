@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/statistics")
 public class StatisticsController {
     private final UserService userService;

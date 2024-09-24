@@ -8,7 +8,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/uploadfile")
 public class FileUploadController {
     @PostMapping()

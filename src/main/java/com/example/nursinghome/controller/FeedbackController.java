@@ -10,7 +10,6 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:63344")
 @RequestMapping("/feedback")
 
 public class FeedbackController {

@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.nursinghome.service.CostsIncurredService;
-@CrossOrigin(origins = "http://localhost:63344")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("costs_incurred")
