@@ -1,8 +1,8 @@
 package com.example.nursinghome.service;
 
 import com.example.nursinghome.config.JwtService;
-import com.example.nursinghome.entity.MealPlan;
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.MealPlan;
+import com.example.nursinghome.model.User;
 import com.example.nursinghome.entitydto.MealPlanDTO;
 import com.example.nursinghome.exception.ConflictException;
 import com.example.nursinghome.repository.HealthRecordRepository;

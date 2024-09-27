@@ -1,6 +1,5 @@
 package com.example.nursinghome.entitydto;
 
-import com.example.nursinghome.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

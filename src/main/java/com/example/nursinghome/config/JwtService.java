@@ -1,6 +1,6 @@
 package com.example.nursinghome.config;
 
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.User;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;

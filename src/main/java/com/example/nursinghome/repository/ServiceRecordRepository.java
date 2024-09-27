@@ -1,7 +1,7 @@
 package com.example.nursinghome.repository;
 
-import com.example.nursinghome.entity.ServiceRecord;
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.ServiceRecord;
+import com.example.nursinghome.model.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

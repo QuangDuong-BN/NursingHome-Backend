@@ -1,9 +1,7 @@
 package com.example.nursinghome.repository;
 
-import com.example.nursinghome.entity.HealthRecord;
-import com.example.nursinghome.entity.MealPlan;
-import com.example.nursinghome.entity.ServiceInfo;
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.MealPlan;
+import com.example.nursinghome.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

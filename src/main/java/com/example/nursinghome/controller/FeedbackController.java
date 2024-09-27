@@ -1,6 +1,6 @@
 package com.example.nursinghome.controller;
 
-import com.example.nursinghome.entity.Feedback;
+import com.example.nursinghome.model.Feedback;
 import com.example.nursinghome.entitydto.FeedBackDTO;
 import com.example.nursinghome.service.FeedbackService;
 import lombok.RequiredArgsConstructor;

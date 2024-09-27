@@ -1,6 +1,6 @@
 package com.example.nursinghome.service;
 
-import com.example.nursinghome.entity.CostsIncurred;
+import com.example.nursinghome.model.CostsIncurred;
 import com.example.nursinghome.entitydto.CostsIncurredDTO;
 import com.example.nursinghome.repository.CostsIncurredRepository;
 import com.example.nursinghome.repository.UserRepository;

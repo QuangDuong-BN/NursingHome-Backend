@@ -1,7 +1,7 @@
 package com.example.nursinghome.auth;
 
 import com.example.nursinghome.config.JwtService;
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.User;
 import com.example.nursinghome.enumcustom.RoleUser;
 import com.example.nursinghome.exception.EmailAlreadyExistException;
 import com.example.nursinghome.exception.RoleException;

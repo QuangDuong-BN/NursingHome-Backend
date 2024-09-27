@@ -2,7 +2,7 @@ package com.example.nursinghome.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.example.nursinghome.entity.ServiceInfo;
+import com.example.nursinghome.model.ServiceInfo;
 import com.example.nursinghome.entitydto.ServiceInfoRequest;
 import com.example.nursinghome.entitydto.ServiceInfoResponse;
 import com.example.nursinghome.exception.RoleException;

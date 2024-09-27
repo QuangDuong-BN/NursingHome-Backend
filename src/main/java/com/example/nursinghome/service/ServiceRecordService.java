@@ -1,10 +1,10 @@
 package com.example.nursinghome.service;
 
 import com.example.nursinghome.config.JwtService;
-import com.example.nursinghome.entity.ServiceInfo;
-import com.example.nursinghome.entity.ServiceRecord;
-import com.example.nursinghome.entity.User;
-import com.example.nursinghome.entity.UserStaffAssignment;
+import com.example.nursinghome.model.ServiceInfo;
+import com.example.nursinghome.model.ServiceRecord;
+import com.example.nursinghome.model.User;
+import com.example.nursinghome.model.UserStaffAssignment;
 import com.example.nursinghome.entitydto.ServiceRecordDTO;
 import com.example.nursinghome.enumcustom.PaymentStatus;
 import com.example.nursinghome.enumcustom.RecordStatus;

@@ -1,7 +1,7 @@
 package com.example.nursinghome.repository;
 
-import com.example.nursinghome.entity.User;
-import com.example.nursinghome.entity.VisitRecord;
+import com.example.nursinghome.model.User;
+import com.example.nursinghome.model.VisitRecord;
 import com.example.nursinghome.enumcustom.TimeOfDay;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

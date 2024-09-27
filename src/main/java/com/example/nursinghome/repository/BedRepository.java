@@ -1,7 +1,7 @@
 package com.example.nursinghome.repository;
 
-import com.example.nursinghome.entity.Bed;
-import com.example.nursinghome.entity.Room;
+import com.example.nursinghome.model.Bed;
+import com.example.nursinghome.model.Room;
 import com.example.nursinghome.projectioninterface.BedProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

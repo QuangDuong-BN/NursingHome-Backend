@@ -1,8 +1,8 @@
 package com.example.nursinghome.service;
 
 import com.example.nursinghome.config.JwtService;
-import com.example.nursinghome.entity.HealthRecord;
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.HealthRecord;
+import com.example.nursinghome.model.User;
 import com.example.nursinghome.entitydto.HealthRecordDTO;
 import com.example.nursinghome.repository.HealthRecordRepository;
 import com.example.nursinghome.repository.UserRepository;

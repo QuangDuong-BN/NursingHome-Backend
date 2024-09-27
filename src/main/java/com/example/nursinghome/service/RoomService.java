@@ -8,7 +8,7 @@ import com.example.nursinghome.repository.RoomRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.example.nursinghome.entity.Room;
+import com.example.nursinghome.model.Room;
 
 import java.util.List;
 import java.util.stream.Collectors;

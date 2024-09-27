@@ -2,7 +2,7 @@
 package com.example.nursinghome.controller;
 
 import com.example.nursinghome.auth.RegisterRequest;
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.User;
 import com.example.nursinghome.repository.UserRepository;
 import com.example.nursinghome.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
 package com.example.nursinghome.service;
 
-import com.example.nursinghome.entity.Feedback;
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.Feedback;
+import com.example.nursinghome.model.User;
 import com.example.nursinghome.entitydto.FeedBackDTO;
 import com.example.nursinghome.repository.FeedbackRepository;
 import com.example.nursinghome.repository.UserRepository;

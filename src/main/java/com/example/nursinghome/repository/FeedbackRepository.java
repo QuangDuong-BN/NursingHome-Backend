@@ -1,7 +1,7 @@
 package com.example.nursinghome.repository;
 
 
-import com.example.nursinghome.entity.Feedback;
+import com.example.nursinghome.model.Feedback;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

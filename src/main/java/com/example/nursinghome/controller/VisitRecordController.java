@@ -1,6 +1,6 @@
 package com.example.nursinghome.controller;
 
-import com.example.nursinghome.entity.VisitRecord;
+import com.example.nursinghome.model.VisitRecord;
 import com.example.nursinghome.entitydto.VisitRecordDTO;
 import com.example.nursinghome.service.VisitRecordService;
 import jakarta.servlet.http.HttpServletRequest;

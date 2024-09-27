@@ -1,4 +1,4 @@
-package com.example.nursinghome.entity;
+package com.example.nursinghome.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 @AllArgsConstructor
 @NoArgsConstructor

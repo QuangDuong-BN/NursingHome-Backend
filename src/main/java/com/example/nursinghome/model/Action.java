@@ -1,4 +1,4 @@
-package com.example.nursinghome.entity;
+package com.example.nursinghome.model;
 
 import com.example.nursinghome.enumcustom.TimeOfDay;
 import jakarta.persistence.*;
@@ -14,25 +14,32 @@ import java.sql.Date;
 @Data
 @Entity
 @Builder
-@Table(name = "visit_record")
-public class VisitRecord {
+@Table(name = "action")
+public class Action {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @ManyToOne()
-    @JoinColumn(name = "visitor_id_fk")
-    private User visitor; // Khóa ngoại tham chiếu đến người dùng
+    @ManyToOne
+    @JoinColumn(name = "user_id_fk")
+    private User user;
 
-    @ManyToOne()
-    @JoinColumn(name = "visited_id_fk")
-    private User visited; // Khóa ngoại tham chiếu đến người dùng
+    @Column(name = "name")
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "time_of_day")
     private TimeOfDay timeOfDay;
 
-    @Column(name = "visit_date")
-    private Date visitDate;
+    @Column(name = "date_of_action")
+    private Date dateOfAction;
+
+    @Column(name = "is_visitable")
+    private Boolean isVisitable;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 
 }

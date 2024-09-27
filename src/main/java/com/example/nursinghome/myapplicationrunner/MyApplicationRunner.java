@@ -1,16 +1,13 @@
 package com.example.nursinghome.myapplicationrunner;
 
-import com.example.nursinghome.config.JwtService;
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.User;
 import com.example.nursinghome.enumcustom.RoleUser;
 import com.example.nursinghome.repository.UserRepository;
-import com.example.nursinghome.repository.httpclient.MailClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 

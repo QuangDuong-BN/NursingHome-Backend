@@ -1,8 +1,7 @@
 package com.example.nursinghome.repository;
 
-import com.example.nursinghome.entity.User;
-import com.example.nursinghome.entity.UserStaffAssignment;
-import com.example.nursinghome.entity.VisitRecord;
+import com.example.nursinghome.model.User;
+import com.example.nursinghome.model.UserStaffAssignment;
 import com.example.nursinghome.projectioninterface.UserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

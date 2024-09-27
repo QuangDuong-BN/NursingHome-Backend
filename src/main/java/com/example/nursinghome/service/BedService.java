@@ -1,8 +1,8 @@
 package com.example.nursinghome.service;
 
 import com.example.nursinghome.config.JwtService;
-import com.example.nursinghome.entity.Bed;
-import com.example.nursinghome.entity.Room;
+import com.example.nursinghome.model.Bed;
+import com.example.nursinghome.model.Room;
 import com.example.nursinghome.entitydto.BedDTO;
 import com.example.nursinghome.enumcustom.RoomType;
 import com.example.nursinghome.exception.NotImplementedException;

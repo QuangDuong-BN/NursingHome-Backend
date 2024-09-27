@@ -1,4 +1,4 @@
-package com.example.nursinghome.entity;
+package com.example.nursinghome.model;
 
 import com.example.nursinghome.enumcustom.TypeService;
 import jakarta.persistence.*;

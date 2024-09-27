@@ -1,4 +1,4 @@
-package com.example.nursinghome.entity;
+package com.example.nursinghome.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,16 +11,18 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Builder
-@Table(name = "fmc_token")
-public class FmcToken {
+@Table(name = "bed")
+public class Bed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id_fk", nullable = false)
-    private User userIdFk;
+    @ManyToOne()
+    @JoinColumn(name = "room_id_fk", nullable = false)
+    private Room roomIdFk;
 
-    @Column(name = "pmc_token")
-    private String pmcToken;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+
 }

@@ -1,9 +1,9 @@
 package com.example.nursinghome.service;
 
 import com.example.nursinghome.config.JwtService;
-import com.example.nursinghome.entity.ServiceRecord;
-import com.example.nursinghome.entity.User;
-import com.example.nursinghome.entity.UserStaffAssignment;
+import com.example.nursinghome.model.ServiceRecord;
+import com.example.nursinghome.model.User;
+import com.example.nursinghome.model.UserStaffAssignment;
 import com.example.nursinghome.entitydto.UserStaffAssignmentDTO;
 import com.example.nursinghome.projectioninterface.UserProjection;
 import com.example.nursinghome.repository.ServiceRecordRepository;

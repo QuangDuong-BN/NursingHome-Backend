@@ -1,6 +1,6 @@
 package com.example.nursinghome.controller;
 
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.User;
 import com.example.nursinghome.entitydto.HealthRecordDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

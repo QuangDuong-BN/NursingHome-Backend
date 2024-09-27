@@ -1,6 +1,6 @@
 package com.example.nursinghome.controller;
 
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.User;
 import com.example.nursinghome.entitydto.MealPlanDTO;
 import com.example.nursinghome.repository.MealPlanRepository;
 import com.example.nursinghome.service.MealPlanService;

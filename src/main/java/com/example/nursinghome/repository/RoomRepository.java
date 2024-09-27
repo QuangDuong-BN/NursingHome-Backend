@@ -1,6 +1,6 @@
 package com.example.nursinghome.repository;
 
-import com.example.nursinghome.entity.Room;
+import com.example.nursinghome.model.Room;
 import com.example.nursinghome.enumcustom.RoomType;
 import com.example.nursinghome.projectioninterface.GetNameRoomProjection;
 import org.springframework.data.jpa.repository.JpaRepository;

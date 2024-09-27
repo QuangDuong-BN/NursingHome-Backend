@@ -1,6 +1,6 @@
 package com.example.nursinghome.controller;
 
-import com.example.nursinghome.entity.UserStaffAssignment;
+import com.example.nursinghome.model.UserStaffAssignment;
 import com.example.nursinghome.entitydto.UserStaffAssignmentDTO;
 import com.example.nursinghome.projectioninterface.UserProjection;
 import com.example.nursinghome.service.UserStaffAssignmentService;

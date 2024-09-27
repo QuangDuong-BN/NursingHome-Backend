@@ -5,7 +5,7 @@ import com.example.nursinghome.repository.ActionRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.example.nursinghome.entity.Action;
+import com.example.nursinghome.model.Action;
 import java.sql.Date;
 import java.util.List;
 

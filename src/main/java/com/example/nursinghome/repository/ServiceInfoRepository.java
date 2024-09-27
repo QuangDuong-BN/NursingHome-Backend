@@ -1,6 +1,6 @@
 package com.example.nursinghome.repository;
 
-import com.example.nursinghome.entity.ServiceInfo;
+import com.example.nursinghome.model.ServiceInfo;
 import com.example.nursinghome.projectioninterface.ServiceInfoProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

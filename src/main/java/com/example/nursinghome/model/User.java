@@ -1,5 +1,5 @@
 /* (C)2024 */
-package com.example.nursinghome.entity;
+package com.example.nursinghome.model;
 
 import com.example.nursinghome.enumcustom.GenderUser;
 import com.example.nursinghome.enumcustom.RecordStatus;

@@ -1,7 +1,7 @@
 package com.example.nursinghome.entitydto;
 
-import com.example.nursinghome.entity.Bed;
-import com.example.nursinghome.entity.User;
+import com.example.nursinghome.model.Bed;
+import com.example.nursinghome.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
