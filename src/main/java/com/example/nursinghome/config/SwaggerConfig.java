@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @OpenAPIDefinition(
-        info = @Info(title = "Main service nursing", description = "Inventory API documentation", version = "1.0")
+        info = @Info(title = "Main service nursing", description = " API documentation", version = "1.0")
 )
 public class SwaggerConfig {
 }
