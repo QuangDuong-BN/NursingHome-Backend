@@ -1,7 +1,7 @@
 package com.example.nursinghome.controller;
 
 import com.example.nursinghome.entitydto.RoomDTO;
-import com.example.nursinghome.enumcustom.RoomType;
+import com.example.nursinghome.constants.enums.RoomType;
 import com.example.nursinghome.service.RoomService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

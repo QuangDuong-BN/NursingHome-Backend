@@ -4,7 +4,7 @@ import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.model.Bed;
 import com.example.nursinghome.model.Room;
 import com.example.nursinghome.entitydto.BedDTO;
-import com.example.nursinghome.enumcustom.RoomType;
+import com.example.nursinghome.constants.enums.RoomType;
 import com.example.nursinghome.exception.NotImplementedException;
 import com.example.nursinghome.projectioninterface.BedProjection;
 import com.example.nursinghome.repository.BedRepository;

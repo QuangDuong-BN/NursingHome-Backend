@@ -2,7 +2,7 @@ package com.example.nursinghome.service;
 
 import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.entitydto.RoomDTO;
-import com.example.nursinghome.enumcustom.RoomType;
+import com.example.nursinghome.constants.enums.RoomType;
 import com.example.nursinghome.projectioninterface.GetNameRoomProjection;
 import com.example.nursinghome.repository.RoomRepository;
 import jakarta.servlet.http.HttpServletRequest;

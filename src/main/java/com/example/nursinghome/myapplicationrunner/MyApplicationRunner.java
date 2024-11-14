@@ -1,7 +1,7 @@
 package com.example.nursinghome.myapplicationrunner;
 
 import com.example.nursinghome.model.User;
-import com.example.nursinghome.enumcustom.RoleUser;
+import com.example.nursinghome.constants.enums.RoleUser;
 import com.example.nursinghome.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

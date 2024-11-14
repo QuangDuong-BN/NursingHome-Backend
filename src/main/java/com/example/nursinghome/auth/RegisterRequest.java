@@ -1,8 +1,8 @@
 /* (C)2024 */
 package com.example.nursinghome.auth;
 
-import com.example.nursinghome.enumcustom.GenderUser;
-import com.example.nursinghome.enumcustom.RoleUser;
+import com.example.nursinghome.constants.enums.GenderUser;
+import com.example.nursinghome.constants.enums.RoleUser;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import java.sql.Date;

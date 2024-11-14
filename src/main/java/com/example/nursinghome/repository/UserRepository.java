@@ -1,7 +1,7 @@
 package com.example.nursinghome.repository;
 
 import com.example.nursinghome.model.User;
-import com.example.nursinghome.enumcustom.RoleUser;
+import com.example.nursinghome.constants.enums.RoleUser;
 import com.example.nursinghome.projectioninterface.UserProjection;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

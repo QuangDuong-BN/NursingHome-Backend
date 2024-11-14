@@ -1,6 +1,6 @@
 package com.example.nursinghome.entitydto;
 
-import com.example.nursinghome.enumcustom.RoleUser;
+import com.example.nursinghome.constants.enums.RoleUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

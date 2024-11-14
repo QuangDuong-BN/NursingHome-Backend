@@ -2,7 +2,7 @@ package com.example.nursinghome.repository;
 
 import com.example.nursinghome.model.User;
 import com.example.nursinghome.model.VisitRecord;
-import com.example.nursinghome.enumcustom.TimeOfDay;
+import com.example.nursinghome.constants.enums.TimeOfDay;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

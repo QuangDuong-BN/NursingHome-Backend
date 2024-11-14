@@ -1,7 +1,7 @@
 package com.example.nursinghome.repository;
 
 import com.example.nursinghome.model.Action;
-import com.example.nursinghome.enumcustom.TimeOfDay;
+import com.example.nursinghome.constants.enums.TimeOfDay;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,13 +15,13 @@ import java.util.Optional;
 public interface ActionRepository extends JpaRepository<Action, Long> {
 
     @Query("SELECT a FROM Action a WHERE a.dateOfAction = :dateOfAction ORDER BY a.timeOfDay ASC ")
-    List<Object[]> findByDateOfAction(@Param("dateOfAction")Date dateOfAction);
+    List<Object[]> findByDateOfAction(@Param("dateOfAction") Date dateOfAction);
 
     @Query("SELECT a FROM Action a  ORDER BY a.dateOfAction DESC , a.timeOfDay ASC ")
     List<Object[]> getListAction();
 
     @Query("SELECT a.name,a.description, a.dateOfAction, a.timeOfDay, a.isVisitable FROM Action a WHERE a.dateOfAction = :dateOfAction ORDER BY a.timeOfDay ASC ")
-    List<Object[]> getAction(@Param("dateOfAction")Date dateOfAction);
+    List<Object[]> getAction(@Param("dateOfAction") Date dateOfAction);
 
     @Query("SELECT a FROM Action a WHERE a.dateOfAction = :dateOfAction AND a.timeOfDay = :timeOfDay")
     Optional<Action> findActionByAndDateOfActionAndAndTimeOfDay(Date dateOfAction, TimeOfDay timeOfDay);

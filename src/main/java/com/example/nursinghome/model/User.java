@@ -1,9 +1,9 @@
 /* (C)2024 */
 package com.example.nursinghome.model;
 
-import com.example.nursinghome.enumcustom.GenderUser;
-import com.example.nursinghome.enumcustom.RecordStatus;
-import com.example.nursinghome.enumcustom.RoleUser;
+import com.example.nursinghome.constants.enums.GenderUser;
+import com.example.nursinghome.constants.enums.RecordStatus;
+import com.example.nursinghome.constants.enums.RoleUser;
 import jakarta.persistence.*;
 import java.sql.Date;
 import java.util.Collection;

@@ -1,6 +1,6 @@
 package com.example.nursinghome.entitydto;
 
-import com.example.nursinghome.enumcustom.RoomType;
+import com.example.nursinghome.constants.enums.RoomType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

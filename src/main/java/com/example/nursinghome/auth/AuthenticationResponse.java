@@ -1,8 +1,8 @@
 package com.example.nursinghome.auth;
 
 
-import com.example.nursinghome.enumcustom.GenderUser;
-import com.example.nursinghome.enumcustom.RoleUser;
+import com.example.nursinghome.constants.enums.GenderUser;
+import com.example.nursinghome.constants.enums.RoleUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

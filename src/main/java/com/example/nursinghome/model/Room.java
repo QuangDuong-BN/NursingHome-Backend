@@ -1,5 +1,5 @@
 package com.example.nursinghome.model;
-import com.example.nursinghome.enumcustom.RoomType;
+import com.example.nursinghome.constants.enums.RoomType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

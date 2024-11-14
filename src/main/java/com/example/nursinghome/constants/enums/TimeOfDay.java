@@ -1,4 +1,4 @@
-package com.example.nursinghome.enumcustom;
+package com.example.nursinghome.constants.enums;
 
 public enum TimeOfDay {
     MORNING,
