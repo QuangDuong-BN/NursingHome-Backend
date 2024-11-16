@@ -1,4 +1,4 @@
-package com.example.nursinghome.UploadFileCOnfig;
+package com.example.nursinghome.uploadfileconfig;
 
 import org.springframework.web.multipart.MultipartFile;
 

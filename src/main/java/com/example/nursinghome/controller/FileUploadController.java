@@ -1,7 +1,7 @@
 package com.example.nursinghome.controller;
 
-import com.example.nursinghome.UploadFileCOnfig.FileUpLoadResponse;
-import com.example.nursinghome.UploadFileCOnfig.FileUploadUtil;
+import com.example.nursinghome.uploadfileconfig.FileUpLoadResponse;
+import com.example.nursinghome.uploadfileconfig.FileUploadUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

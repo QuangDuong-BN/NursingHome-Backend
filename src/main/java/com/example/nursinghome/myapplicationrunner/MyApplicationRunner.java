@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +22,14 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     final private UserRepository userRepository;
     final private PasswordEncoder passwordEncoder;
+    final private KafkaTemplate kafkaTemplate;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
+
         log.info("Công việc đã được thực hiện khi ứng dụng khởi động: Check và tạo admin nếu chưa được tạo.");
+        kafkaTemplate.send("send-email", "Công việc đã được thực hiện khi ứng dụng khởi động: Check và tạo admin nếu chưa được tạo.");
 
         Optional<User> numberOfAdmin = userRepository.findByUsername("admin@lotuscare.com");
         if (numberOfAdmin.isEmpty()) {
