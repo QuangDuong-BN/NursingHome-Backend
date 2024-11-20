@@ -35,6 +35,7 @@ public class JwtService {
                 .issueTime(new Date())
                 .expirationTime(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 365))
                 .claim("scope", buildScope(user))
+                .claim("token_version", user.getTokenVersion())
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(header, payload);
@@ -46,30 +47,16 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public Integer extractVersionToken(String token) {
+        return extractClaim(token, claims -> claims.get("token_version", Integer.class));
+    }
+
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(User user) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("scope", buildScope(user));
-        return generateToken(claims, user);
-    }
-
-    public String generateToken(
-            Map<String, Object> extraClaims,
-            User user
-    ) {
-        return Jwts
-                .builder()
-                .setSubject(user.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24 * 365)) //make expriation for 365 day
-                .signWith(getSignInkey(), SignatureAlgorithm.HS256)
-                .setClaims(extraClaims)
-                .compact();
-    }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
@@ -89,17 +76,11 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
-                .setSigningKey(getSignInkey())
+                .setSigningKey(JWT_SECRET_KEY.getBytes())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
-
-    private Key getSignInkey() {
-        byte[] keyBytes = Decoders.BASE64.decode(JWT_SECRET_KEY);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
-
 
     private String buildScope(User user) {
         StringBuilder scope = new StringBuilder();

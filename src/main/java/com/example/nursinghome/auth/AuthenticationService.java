@@ -7,15 +7,19 @@ import com.example.nursinghome.exception.EmailAlreadyExistException;
 import com.example.nursinghome.exception.RoleException;
 import com.example.nursinghome.repository.UserRepository;
 import com.example.nursinghome.repository.httpclient.MailClient;
+import com.example.nursinghome.service.RedisService;
 import com.nimbusds.jose.JOSEException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.ReactiveRedisOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -26,14 +30,14 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final MailClient mailClient;
+    private final RedisService redisService;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public AuthenticationResponse register(RegisterRequest request) throws JOSEException {
         if (userRepository.countByEmail(request.getEmail()) > 0 ||
                 userRepository.countByUsername(request.getUsername()) > 0) {
             throw new EmailAlreadyExistException("Email or username already exists");
         }
         // xac dinh role
-        RoleUser role;
         if (Objects.equals(request.getRole(), "ADMIN")) {
             throw new RoleException("You don't have permission to register as an admin");
         }
@@ -45,13 +49,18 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .phone(request.getPhone())
+                .tokenVersion(0)
                 .build();
-        userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+
+        var jwtToken = jwtService.generateTokenWithNumBus(user);
+        user = userRepository.save(user);
 
         // send mail to user after register successfully
-        log.info("- Gui mail");
-        mailClient.sendEmail();
+//        log.info("- Gui mail");
+//        mailClient.sendEmail();
+
+        redisService.save("user:token_version:" + user.getId(), 0);
+
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -94,7 +103,7 @@ public class AuthenticationService {
     }
 
 
-    public AuthenticationResponse registerForFamilyMember(RegisterRequest request) {
+    public AuthenticationResponse registerForFamilyMember(RegisterRequest request) throws JOSEException {
         if (userRepository.countByEmail(request.getEmail()) > 0 ||
                 userRepository.countByUsername(request.getUsername()) > 0) {
             throw new EmailAlreadyExistException("Email or username already exists");
@@ -113,7 +122,7 @@ public class AuthenticationService {
                 .address(request.getAddress())
                 .build();
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateTokenWithNumBus(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .id(null)

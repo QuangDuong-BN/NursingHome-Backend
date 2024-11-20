@@ -2,9 +2,11 @@
 package com.example.nursinghome.controller;
 
 import com.example.nursinghome.auth.RegisterRequest;
+import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.model.User;
 import com.example.nursinghome.repository.UserRepository;
 import com.example.nursinghome.service.UserService;
+import com.nimbusds.jose.JOSEException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get_all_user")
@@ -35,8 +38,12 @@ public class UserController {
     }
 
     @GetMapping("/get_user")
-    public ResponseEntity<?> getUser(HttpServletRequest request) {
-        return ResponseEntity.ok(userService.getUser(request));
+    public ResponseEntity<?> getUser(HttpServletRequest httpServletRequest) {
+        String token = httpServletRequest.getHeader("Authorization");
+        token = token.substring(7); // Loại bỏ "Bearer " từ token
+        Integer version= jwtService.extractVersionToken(token);
+        log.error("Token: " + version);
+        return ResponseEntity.ok(userService.getUser(httpServletRequest));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -48,7 +55,7 @@ public class UserController {
     @PostMapping("/register_for_family_member")
     public ResponseEntity<?> registerForFamilyMember(
             HttpServletRequest httpServletRequest, @RequestBody RegisterRequest request)
-            throws IOException {
+            throws IOException, JOSEException {
         return ResponseEntity.ok(userService.registerForFamilyMember(httpServletRequest, request));
     }
 

@@ -13,6 +13,7 @@ import com.example.nursinghome.exception.NotImplementedException;
 import com.example.nursinghome.exception.RoleException;
 import com.example.nursinghome.projectioninterface.UserProjection;
 import com.example.nursinghome.repository.UserRepository;
+import com.nimbusds.jose.JOSEException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
@@ -60,7 +61,7 @@ public class UserService {
     @PreAuthorize("hasRole('ADMIN')")
     public AuthenticationResponse registerForFamilyMember(
             HttpServletRequest httpServletRequest, RegisterRequest registerRequest)
-            throws IOException {
+            throws IOException, JOSEException {
 
         String token =
                 httpServletRequest.getHeader(
@@ -98,7 +99,7 @@ public class UserService {
                             .familyMember(familyMember)
                             .build();
             userRepository.save(user);
-            var jwtToken = jwtService.generateToken(user);
+            var jwtToken = jwtService.generateTokenWithNumBus(user);
             return AuthenticationResponse.builder()
                     .token(jwtToken)
                     .name(registerRequest.getName())

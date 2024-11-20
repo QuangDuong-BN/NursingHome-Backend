@@ -3,6 +3,7 @@ package com.example.nursinghome.myapplicationrunner;
 import com.example.nursinghome.model.User;
 import com.example.nursinghome.constants.enums.RoleUser;
 import com.example.nursinghome.repository.UserRepository;
+import com.example.nursinghome.service.RedisService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -23,6 +24,7 @@ public class MyApplicationRunner implements ApplicationRunner {
     final private UserRepository userRepository;
     final private PasswordEncoder passwordEncoder;
     final private KafkaTemplate kafkaTemplate;
+    final private RedisService redisService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -30,6 +32,7 @@ public class MyApplicationRunner implements ApplicationRunner {
 
         log.info("Công việc đã được thực hiện khi ứng dụng khởi động: Check và tạo admin nếu chưa được tạo.");
         kafkaTemplate.send("send-email", "Công việc đã được thực hiện khi ứng dụng khởi động: Check và tạo admin nếu chưa được tạo.");
+        redisService.save("send-email", "Công việc đã được thực hiện khi ứng dụng khởi động: Check và tạo admin nếu chưa được tạo.");
 
         Optional<User> numberOfAdmin = userRepository.findByUsername("admin@lotuscare.com");
         if (numberOfAdmin.isEmpty()) {

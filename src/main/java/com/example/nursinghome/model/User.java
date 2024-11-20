@@ -5,9 +5,11 @@ import com.example.nursinghome.constants.enums.GenderUser;
 import com.example.nursinghome.constants.enums.RecordStatus;
 import com.example.nursinghome.constants.enums.RoleUser;
 import jakarta.persistence.*;
+
 import java.sql.Date;
 import java.util.Collection;
 import java.util.HashSet;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -69,6 +71,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private RecordStatus status;
+
+    @Column(name = "token_version", nullable = false, columnDefinition = "INT DEFAULT 0")
+    private Integer tokenVersion = 0;
 
     @Override
     public String getPassword() {
