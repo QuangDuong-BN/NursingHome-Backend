@@ -36,7 +36,7 @@ public class MyApplicationRunner implements ApplicationRunner {
         log.info("Công việc đã được thực hiện khi ứng dụng khởi động: Check và tạo admin nếu chưa được tạo.");
 //        KafkaMailVM kafkaMailVM = new KafkaMailVM("quangduong19992001@gmail.com", "ma xac thuc", "Xin chao");
 //        kafkaTemplate.send("send-email", kafkaMailVM);
-        otpService.saveOtpAndSendOtpToEmail("dwad");
+//        otpService.saveOtpAndSendOtpToEmail("dwad");
 
         Optional<User> numberOfAdmin = userRepository.findByUsername("admin@lotuscare.com");
         if (numberOfAdmin.isEmpty()) {
