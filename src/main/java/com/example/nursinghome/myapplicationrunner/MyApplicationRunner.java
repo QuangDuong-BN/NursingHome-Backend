@@ -23,7 +23,7 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     final private UserRepository userRepository;
     final private PasswordEncoder passwordEncoder;
-    final private KafkaTemplate kafkaTemplate;
+    final private KafkaTemplate<String, String> kafkaTemplate;
     final private RedisService redisService;
 
     @Override
