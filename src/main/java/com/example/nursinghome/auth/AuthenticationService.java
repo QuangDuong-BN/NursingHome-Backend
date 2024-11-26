@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
@@ -31,6 +32,10 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final MailClient mailClient;
     private final RedisService redisService;
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    private static final String BLACKLIST_PREFIX = "blacklist:token:";
+    private static final long BLACKLIST_EXPIRATION_MINUTES = 30;
 
     public AuthenticationResponse register(RegisterRequest request) throws JOSEException {
         if (userRepository.countByEmail(request.getEmail()) > 0 ||
@@ -55,12 +60,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateTokenWithNumBus(user);
         user = userRepository.save(user);
 
-        // send mail to user after register successfully
-//        log.info("- Gui mail");
-//        mailClient.sendEmail();
-
-        redisService.save("user:token_version:" + user.getId(), 0);
-
+        redisTemplate.opsForValue().set("user:token_version:" + user.getUsername(), 0);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -133,6 +133,28 @@ public class AuthenticationService {
                 .phone(user.getPhone())
                 .role(user.getRole())
                 .build();
+    }
+
+    public String changePassword(String username, String newPassword) {
+        User user = userRepository.findByUsername(username).orElseThrow();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        Integer tokenVersion = user.getTokenVersion();
+        tokenVersion++;
+        user.setTokenVersion(tokenVersion);
+        redisTemplate.opsForValue().set("user:token_version:" + user.getUsername(), tokenVersion);
+        userRepository.save(user);
+        return "Password changed successfully";
+    }
+
+    public String logOut(String token) {
+        String key = BLACKLIST_PREFIX + token;
+        redisTemplate.opsForValue().set(key, "blacklisted", BLACKLIST_EXPIRATION_MINUTES, TimeUnit.DAYS);
+        return "Log out successfully";
+    }
+    // Kiểm tra token có trong blacklist không
+    public boolean isTokenBlacklisted(String token) {
+        String key = BLACKLIST_PREFIX + token;
+        return Boolean.TRUE.equals(redisTemplate.hasKey(key));
     }
 }
 

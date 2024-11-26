@@ -1,5 +1,6 @@
 package com.example.nursinghome.myapplicationrunner;
 
+import com.example.nursinghome.exception.AccessDeniedException;
 import com.example.nursinghome.model.User;
 import com.example.nursinghome.constants.enums.RoleUser;
 import com.example.nursinghome.repository.UserRepository;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -26,7 +28,7 @@ public class MyApplicationRunner implements ApplicationRunner {
     final private UserRepository userRepository;
     final private PasswordEncoder passwordEncoder;
     final private KafkaTemplate<String, KafkaMailVM> kafkaTemplate;
-    final private RedisService redisService;
+    private final RedisTemplate<String, Object> redisTemplate;
     final private OtpService otpService;
 
     @Override

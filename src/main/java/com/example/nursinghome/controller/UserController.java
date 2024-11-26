@@ -1,6 +1,7 @@
 /* (C)2024 */
 package com.example.nursinghome.controller;
 
+import com.example.nursinghome.auth.AuthenticationService;
 import com.example.nursinghome.auth.RegisterRequest;
 import com.example.nursinghome.config.JwtService;
 import com.example.nursinghome.model.User;
@@ -25,6 +26,7 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final AuthenticationService authenticationService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get_all_user")
@@ -39,10 +41,6 @@ public class UserController {
 
     @GetMapping("/get_user")
     public ResponseEntity<?> getUser(HttpServletRequest httpServletRequest) {
-        String token = httpServletRequest.getHeader("Authorization");
-        token = token.substring(7); // Loại bỏ "Bearer " từ token
-        Integer version= jwtService.extractVersionToken(token);
-        log.error("Token: " + version);
         return ResponseEntity.ok(userService.getUser(httpServletRequest));
     }
 
@@ -91,5 +89,11 @@ public class UserController {
     public ResponseEntity<?> getFamilyMemberById(
             HttpServletRequest request, @RequestParam("id") Long id) {
         return ResponseEntity.ok(userRepository.getFamilyUserByIdUser(id));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String token) {
+        token = token.replace("Bearer ", "");
+        return ResponseEntity.ok(authenticationService.logOut(token));
     }
 }

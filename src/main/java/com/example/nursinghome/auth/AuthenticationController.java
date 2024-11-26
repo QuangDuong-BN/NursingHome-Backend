@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class AuthenticationController {
     private final AuthenticationService authenticationService;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
@@ -28,4 +29,13 @@ public class AuthenticationController {
             @RequestBody AuthenticationRequest request) throws JOSEException {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
+
+    @PostMapping("/change_password")
+    public ResponseEntity<?> changePassword(HttpServletRequest httpServletRequest,
+                                            @RequestParam("password") String password) throws JOSEException {
+        String token = jwtService.getTokenFromHttpServletRequest(httpServletRequest);
+        String username = jwtService.extractUsername(token);
+        return ResponseEntity.ok(authenticationService.changePassword(username, password));
+    }
+
 }
