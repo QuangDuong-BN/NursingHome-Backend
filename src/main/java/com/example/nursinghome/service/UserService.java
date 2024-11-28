@@ -15,10 +15,12 @@ import com.example.nursinghome.projectioninterface.UserProjection;
 import com.example.nursinghome.repository.UserRepository;
 import com.nimbusds.jose.JOSEException;
 import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -126,13 +128,9 @@ public class UserService {
     }
 
     public List<User> findAllByIDOrName(HttpServletRequest request, Long id, String name) {
-        String token =
-                request.getHeader(
-                        "Authorization"); // Lấy token từ Header (thường được gửi trong header
-        // Authorization)
+        String token = request.getHeader("Authorization"); // Lấy token từ Header (thường được gửi trong header Authorization)
         token = token.substring(7); // Loại bỏ "Bearer " từ token
-        String username =
-                jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
+        String username = jwtService.extractUsername(token); // Sử dụng JwtService để lấy username từ token
         return userRepository.findAllByIDOrName(id, name);
     }
 
